@@ -1,0 +1,321 @@
+# Modifier
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+#font pango:monospace 8
+font xft:source code pro 12
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+#floating_modifier $mod mouse_warping output
+focus_follows_mouse no
+popup_during_fullscreen smart
+
+# Appearance:
+for_window [class="^.*"] border pixel 2
+gaps inner 10
+gaps outer 5
+smart_borders on
+
+# Startup:
+exec --no-startup-id unclutter
+exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
+exec --no-startup-id twmnd
+#exec --no-startup-id ~/.fehbg
+#exec --no-startup-id conky
+exec --no-startup-id urxvt -name dropdown_terminal
+#-- 
+
+# Farben:
+set $i3_orange1		#FF8000
+set $i3_orange2		#622400
+set $i3_orange3		#FF6308
+set $i3_grey1		#333333BB
+set $i3_grey2		#222222BB
+set $i3_grey1lt		#333333DD
+set $i3_grey2lt		#222222DD
+set $i3_white		#FFFFFFBB
+set $i3_black		#000000BB
+set $i3_lightgrey	#7D7D7DBB
+
+#class                 	border  	bground 	text    	indicator 	child_border
+client.focused          $i3_orange1 	$i3_grey2lt 	$i3_orange3 	$i3_orange3    	#994D00
+client.focused_inactive $i3_grey1	#5F676A 	$i3_white 	#484E50   	#5F676A
+client.unfocused        $i3_grey1 	$i3_grey2	#888888 	#292D2E   	#222222
+client.urgent           #FF0000 	#000000DD 	#FF0000 	#FF0000   	#000000
+client.placeholder      #000000 	#0C0C0C 	#FFFFFF 	#000000   	#0C0C0C
+
+client.background       $i3_black
+
+
+# Bar:
+bar {
+	output primary
+	font xft:source code pro 14
+        status_command i3blocks
+	i3bar_command i3bar -t
+	strip_workspace_numbers yes
+	position top
+	mode dock
+	modifier None
+	tray_output none
+	colors {
+		background #000000BB
+		focused_workspace	$i3_grey1lt   	$i3_grey2lt   	$i3_orange3
+		inactive_workspace	$i3_grey1   	$i3_grey2   	#888888
+		urgent_workspace	#FF0000 	#000000DD	#FF0000		
+	}
+}
+bar {
+	output DP-1-1
+	font xft:source code pro 11
+        status_command i3blocks -c ~/.config/i3blocks/config_mn2
+	i3bar_command i3bar -t
+	strip_workspace_numbers yes
+	position top
+	mode dock
+	modifier None
+	tray_output none
+	colors {
+		background #000000BB
+		focused_workspace	$i3_grey1lt   	$i3_grey2lt   	$i3_orange3
+		inactive_workspace	$i3_grey1   	$i3_grey2   	#888888
+		urgent_workspace	#FF0000 	#000000DD	#FF0000		
+	}
+}
+# Workspace + Window Configuration
+set $ws1 "1:0xBA5E"
+set $ws2 "2:0xDA7A"
+set $ws3 "3:0xC0DE"
+set $ws4 "4:0xF4C3"
+set $ws5 "5:0xDEAD"
+set $ws6 "6:0x11FE"
+set $ws7 "7:0xBA55"
+set $ws8 "8:0x1BAD"
+set $ws9 "9:0xf00d"
+set $ws10 "10:0xC4F3"
+
+workspace $ws1 gaps inner 0
+workspace $ws1 gaps outer 0
+workspace $ws3 gaps inner 0
+workspace $ws3 gaps outer 0
+workspace $ws4 gaps inner 0
+workspace $ws4 gaps outer 0
+workspace $ws5 gaps inner 20
+workspace $ws5 gaps outer 15
+workspace $ws7 gaps inner 20
+workspace $ws7 gaps outer 15
+
+workspace 1 output primary
+workspace 2 output primary
+workspace 3 output DP-1-1 primary
+workspace 4 output DP-1-1 primary
+workspace 5 output DP-1-1 primary
+workspace 6 output primary
+workspace 7 output primary
+workspace 8 output DP-1-1 primary
+workspace 9 output primary
+workspace 10 output primary
+
+# --- Programme auf Custom Workspaces:
+assign [class="^mpv$"]      	$ws7
+assign [title="^Telegram$"] 	$ws6
+assign [class="^Emacs$"] 	$ws3
+
+# Opencv Fenster immer floating
+for_window [class="cv_*"] floating enable
+for_window [title="cv_*"] floating enable
+
+# Firefox immer tabbed:
+for_window [class="Firefox"] layout tabbed
+
+# neomutt immer tabbed
+for_window [class="Firefox"] layout tabbed
+
+# Steam und Games:
+assign [class="^Steam$"]     	$ws3
+assign [class="^Lutris$"]    	$ws3
+assign [class="^Blizzard$"]  	$ws3
+assign [class="^TeamSpeak$"] 	$ws3
+assign [title="^TeamSpeak$"] 	$ws3
+for_window [class="Steam"]   	layout tabbed
+for_window [class="Lutris"]  	layout tabbed
+
+# hide Davmail:
+for_window [title="^DavMail"] floating enable
+for_window [title="^DavMail"] move scratchpad
+for_window [title="^DavMail"] sticky enable
+#for_window [title="^DavMail"] scratchpad show
+#bindsym Mod1+d [title="^DavMail"] scratchpad show
+
+# #---Dropdown Windows---# #
+for_window [instance="dropdown_*"] floating enable
+for_window [instance="dropdown_*"] move scratchpad
+for_window [instance="dropdown_*"] sticky enable
+for_window [instance="dropdown_*"] scratchpad show
+for_window [instance="dropdown_terminal"] resize set 960 250
+for_window [instance="dropdown_terminal"] border pixel 2
+for_window [instance="dropdown_terminal"] move position center
+
+for_window [instance="conky"] floating enable
+for_window [instance="conky"] move scratchpad
+for_window [instance="conky"] sticky enable
+for_window [instance="conky"] scratchpad show
+#for_window [instance="conky"] resize set 960 450
+for_window [instance="conky"] move position 1500 -10
+for_window [instance="conky"] border pixel 0
+
+bindsym $mod+c [instance="conky"] scratchpad show 
+bindsym $mod+x [instance="dropdown_terminal"] scratchpad show 
+
+for_window [instance="dropdown_*"] scratchpad show
+for_window [instance="conky"] scratchpad show 
+
+
+# --- Keybindings:
+# kill focused window
+bindsym $mod+q [con_id="__focused__" instance="^(?!dropdown_).*$"] kill
+# start dmenu (a program launcher)
+#bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# Volume 
+bindsym XF86AudioRaiseVolume exec changeVolume +5
+bindsym XF86AudioLowerVolume exec changeVolume -5
+bindsym $mod+0x2b exec changeVolume +5
+bindsym $mod+0x2d exec changeVolume -5
+bindsym $mod+Shift+0x2b exec changeVolume u
+bindsym $mod+Shift+0x2d exec changeVolume m
+# Programme:
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
+bindsym $mod+BackSpace exec i3-sensible-terminal -e htop
+bindsym $mod+w exec --no-startup-id firefox
+bindsym $mod+Shift+w exec --no-startup-id firefox -private-window
+# MPV-addURL:
+bindsym $mod+a exec --no-startup-id addURL
+# Gap-Keybindings:
+bindsym $mod+g exec --no-startup-id gapswitch
+#bindsym $mod+0x2b gaps inner current plus 5
+#bindsym $mod+0x2d gaps inner current minus 5
+#bindsym $mod+Shift+0x2b gaps outer current plus 5
+#bindsym $mod+Shift+0x2d gaps outer current minus 5
+# System related keybindings on "windows" key (which binds to "alt", which is Mod1)
+# Mount:
+bindsym Mod1+m exec dmenumount
+bindsym Mod1+Shift+m exec dmenuunmount
+# Kill process with dmenu:
+bindsym Mod1+k exec dmenukill
+# Select network with dmenu:
+bindsym Mod1+n exec urxvt -name dropdown_wifi -e dmenuwifi
+# change to random bg:
+bindsym Mod1+b exec "$HOME/.config/i3blocks/randomBackground"
+# connect monitor
+bindsym Mod1+s exec dmenuMonitor
+# mirror monitor
+bindsym Mod1+Shift+s exec dmenuMonitor --mirror
+#
+# Focus:
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+p focus parent
+bindsym $mod+shift+p focus child
+# Resize
+bindsym $mod+r mode "resize"
+mode "resize" {
+	bindsym h exec --no-startup-id i3resize left
+	bindsym j exec --no-startup-id i3resize down
+	bindsym k exec --no-startup-id i3resize up
+	bindsym l exec --no-startup-id i3resize right
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+	bindsym r mode "default"
+	bindsym $mod+r mode "default"
+}
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+# Layout
+bindsym $mod+t split toggle
+bindsym $mod+f fullscreen toggle
+bindsym $mod+s layout tabbed
+bindsym $mod+e layout toggle split
+# Floating stuff
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+#
+bindsym Control+Tab workspace back_and_forth
+# 
+bindsym Control+j workspace    $ws1
+bindsym Control+k workspace    $ws2
+bindsym Control+0xf6 workspace $ws3
+bindsym Control+0xe4 workspace $ws4; exec --no-startup-id getMails
+bindsym Control+0x23 workspace $ws5
+bindsym Control+n workspace    $ws6
+bindsym Control+m workspace    $ws7
+bindsym Control+0xfc workspace $ws8
+#
+bindsym $mod+Left  workspace prev
+bindsym $mod+Right workspace next
+# Move Container to Workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+#
+bindsym Control+Shift+j    move container to workspace $ws1
+bindsym Control+Shift+k    move container to workspace $ws2
+bindsym Control+Shift+0xf6 move container to workspace $ws3
+bindsym Control+Shift+0xe4 move container to workspace $ws4
+bindsym Control+Shift+0x23 move container to workspace $ws5
+bindsym Control+Shift+n    move container to workspace $ws6
+bindsym Control+Shift+m    move container to workspace $ws7
+bindsym Control+Shift+0xfc move container to workspace $ws8
+# Move Workspace to next output
+bindsym $mod+Shift+s move workspace to output up
+# "Gaming switch" für das Tastaturlayout
+#bindsym $mod+Shift+g	exec gameswitch
+# reload the configuration file
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# Shutdown and Reboot
+set $Locker i3lockColor && sleep 1
+set $mode_system System (l) lock, (e) exit, (s) shutdown, (h) hibernate, (r) reboot 
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $Locker, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    #bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym s exec --no-startup-id systemctl poweroff -i, mode "default"  
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+bindsym $mod+Delete mode "$mode_system"
+bindsym $mod+Shift+Delete exec --no-startup-id $Locker

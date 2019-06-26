@@ -1,0 +1,29 @@
+# Ignore everything but...
+/*
+
+# ... gitignore ...
+!.gitignore
+
+# ... i3, i3blocks, mpv, ranger & twmn ...
+!.config/
+.config/*
+!.config/compton
+!.config/firefox
+!.config/i3
+!.config/i3blocks
+!.config/mpv
+!.config/ranger
+!.config/twmn
+
+# ... custom scripts ...
+!.scripts
+
+# ... basic stuff ...
+!.bash_profile
+!.bashrc
+!.fonts.conf
+!.spacemacs
+!.vimrc
+!.Xdefaults
+!.xinitrc
+

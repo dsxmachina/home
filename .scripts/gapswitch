@@ -1,0 +1,22 @@
+#!/bin/bash
+
+GAP=0
+
+if [ -e "$HOME/.scripts/gapval.dat" ] ; then
+    GAP=$(cat "$HOME/.scripts/gapval.dat")
+fi
+
+# do something in your script
+if [[ $GAP -eq 0 ]]; then
+	GAP=1
+	i3-msg gaps inner current set 10 
+	i3-msg gaps outer current set 5
+else
+	GAP=0
+	i3-msg gaps inner current set 0
+	i3-msg gaps outer current set 0
+fi
+
+#save it output the file
+echo $GAP > "$HOME/.scripts/gapval.dat"
+

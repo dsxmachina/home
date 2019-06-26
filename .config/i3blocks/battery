@@ -1,0 +1,41 @@
+#!/bin/bash
+# This is just a modified Version of another script.
+# For the original script (and others) see: https://github.com/vivien/i3blocks-contrib
+status="$(acpi)"
+IFS=' '
+read -a words <<< "$status"
+
+percent="${words[3]//[!0-9]/}"
+
+if [[ "${words[2]//[!a-zA-Z]/}" == "Discharging" ]]; then
+	charge="\u25bc"
+else
+	charge="\u25b2"
+fi
+
+# charge symbol \u25a0 or \u258c
+cs="\u25a0"
+# battery start \u2503
+bs="["
+# battery end \u2523
+be="]"
+
+if (( $percent < 13 )); then
+	battery="$bs$cs-------$be"
+elif (( $percent < 26 )); then
+	battery="$bs$cs$cs------$be"
+elif (( $percent < 38 )); then
+	battery="$bs$cs$cs$cs-----$be"
+elif (( $percent < 51 )); then
+	battery="$bs$cs$cs$cs$cs----$be"
+elif (( $percent < 63 )); then
+	battery="$bs$cs$cs$cs$cs$cs---$be"
+elif (( $percent < 76 )); then
+	battery="$bs$cs$cs$cs$cs$cs$cs--$be"
+elif (( $percent < 88 )); then
+	battery="$bs$cs$cs$cs$cs$cs$cs$cs-$be"
+else
+	battery="$bs$cs$cs$cs$cs$cs$cs$cs$cs$be"
+fi
+
+echo -e "$battery[$charge]"

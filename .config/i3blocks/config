@@ -1,0 +1,68 @@
+# i3blocks config file
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+command=/home/machina/.config/i3blocks/$BLOCK_NAME
+separator_block_width=15
+markup=xft
+
+# little trick: i3blocks for repeated excecution
+[randomBackground]
+interval=1800
+
+# Volume indicator
+[volumeBlocks]
+instance=Master
+interval=once
+signal=10
+color=#FF5000
+
+# Memory usage
+# The type defaults to "mem" if the instance is not specified.
+[memory]
+label=MEMORY:
+interval=30
+color=#FF5500
+
+# Network interface monitoring
+[network]
+interval=30
+color=#DD7722
+
+# Battery indicator
+#
+# The battery instance defaults to 0.
+[battery]
+instance=0
+interval=30
+color=#BB9944
+
+# Date Time
+[time]
+label=TIME:
+command=date '+%d-%m-%Y %H:%M'
+interval=5
+color=#AAAA55
+

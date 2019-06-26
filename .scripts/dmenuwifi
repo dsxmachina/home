@@ -1,0 +1,28 @@
+#!/bin/bash
+name="$(nmcli device wifi list | dmenu -i -l 8 | awk -F' Infra' '{print $1}' | sed -e 's/^[ *\t]*//;s/[ *\t]*$//')"
+
+[[ -z "$name" ]] && exit
+[[ $name =~ ^IN-USE ]] && exit
+
+if  [ -e "$HOME/.config/wireless/$name.conf" ] ; then
+	word=$(sed -n '1p' < "$HOME/.config/wireless/$name.conf")
+	prox=$(sed -n '2p' < "$HOME/.config/wireless/$name.conf")
+else
+	word=$(echo "" | dmenu -p "enter password:")
+	# to hide input change to: "dmenu -p "enter password"  -nf black -nb black"
+	prox=$(echo "" | dmenu -p "enter proxy:")
+
+	echo -e "$word\n$prox" > "$HOME/.config/wireless/$name.conf"
+fi
+
+if [[ -z "$prox" ]] ; then
+	# connect without proxy
+	succ=$(nmcli device wifi connect "$name" password "$word")
+else
+	# connect with proxy
+	succ=$(nmcli device wifi connect "$name" password "$word" pac-url $prox)
+fi
+
+wait
+notify-send "$succ"
+

@@ -1,0 +1,66 @@
+!! black dark/light
+*color0:                #000000
+*color8:                #002B36
+
+!! red dark/light
+*color1:                #DC322F
+*color9:                #CB4B16
+
+!! green dark/light
+*color2:                #859900
+*color10:               #586E75
+
+!! yellow dark/light
+*color3:                #B58900
+*color11:               #657B83
+
+!! blue dark/light
+*color4:                #268BD2
+*color12:               #839496
+
+!! magenta dark/light
+*color5:                #D33682
+*color13:               #6C71C4
+
+!! cyan dark/light
+*color6:                #A07E5D
+*color14:               #A19A93
+
+!! white dark/light
+*color7:                #FF8000
+*color15: 		#FF8000
+
+!! fg bg
+foreground:		#DDDDDD
+background:		#000000
+
+!! Appearance:
+URxvt.foreground: 	#FF8000
+URxvt.background: 	[80]#000000
+URxvt.depth: 		32
+URxvt.font: 		xft:source code pro:size=12
+URxvt.scrollBar: 	false
+URxvt.iso14755: 	false
+URxvt.iso14755_52: 	false
+
+!! Extensions:
+URxvt-perl-ext-common: 		default,matcher,resize-font,url-select,keyboard-select
+!! url-select:
+URxvt.keysym.M-u: 		perl:url-select:select_next
+URxvt.url-select.launcher:	/usr/bin/xdg-open
+URxvt.url-select.underline:	true
+!! keyboard-select:
+URxvt.keysym.M-v:		perl:keyboard-select:activate !!!! resize-font:
+URxvt*resize-font*smaller:	M-plus
+URxvt.resize-font.bigger:	M-down
+!! matcher
+URxvt.url-launcher:		/usr/bin/xdg-open
+URxvt.matcher.button:		1
+
+!! Custom-Keybindings:
+URxvt.keysym.Shift-Control-V: 	eval:paste_clipboard
+URxvt.keysym.Control-V: 	eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: 	eval:selection_to_clipboard
+
+URxvt.keysym.Shift-Up: 		command:\033]720;1\007
+URxvt.keysym.Shift-Down: 	command:\033]721;1\007

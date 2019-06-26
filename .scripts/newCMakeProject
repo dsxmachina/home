@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Choose project name and sub-directory
+projectDir="$HOME/Projekte"
+projName="$(echo "" | dmenu -p 'Enter a new name: ' | tr -d '[:space:]')"
+[[ "$projName" == "" ]] && exit
+subDirs="$(ls -l $projectDir | awk '/^d/ {print $9}' | dmenu -p 'Select subfolder or create new one: ' | tr -d '[:space:]')"
+[[ "$subDirs" == "" ]] && exit
+[[ -d "$projectDir/$subDirs" ]] || mkdir "$projectDir/$subDirs"
+newDir="$projectDir/$subDirs/$projName"
+nlibs="$(seq 0 9 | dmenu -p 'How many libs to add? (0 default): ')" 
+[[ "$nlibs" == "" ]] && exit
+
+# Create folder and files
+mkdir $newDir
+
+echo -e "cmake_minimum_required (VERSION 2.8)\n\nproject ($projName)\n\nfind_package(OpenCV REQUIRED)\n\ninclude_directories(\${OpenCV_INCLUDE_DIRS} /usr/include)\n\nadd_executable($projName $projName.cpp main.cpp)\n" > "$newDir/CMakeLists.txt"
+
+if [[ "$nlibs" == "0" ]]; then 
+	libs=""
+else
+	libs=""
+	for i in $(seq 1 $nlibs)
+	do
+		libs+=" $(ls -p /usr/lib | grep -v / | grep .so | dmenu -i -l 10)"
+	done
+fi
+echo -e "target_link_libraries($projName \${OpenCV_LIBS}$libs)" >> "$newDir/CMakeLists.txt"
+
+echo -e "#include <iostream>"  		 > "$newDir/main.cpp"
+echo -e "#include <string>" 		>> "$newDir/main.cpp"
+echo -e "#include \"$projName.h\""  	>> "$newDir/main.cpp"
+echo -e "#include <iostream>" 		 > "$newDir/$projName.h"
+echo -e "#include <string>" 		>> "$newDir/$projName.h"
+echo -e "#include \"$projName.h\"" 	 > "$newDir/$projName.cpp"

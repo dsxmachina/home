@@ -1,0 +1,31 @@
+#!/bin/bash
+prime="eDP-1-1"
+# First - Laptop screen is set:
+xrandr --output $prime --mode 1920x1080 --dpi 96 --primary
+
+moveWorkspace() {
+	i3-msg -t get_workspaces | grep -o -P "\"num\":[0-9]" | grep -o -P "$1" && i3-msg "[workspace=$1] move workspace to output $2" 
+}
+
+# only open dmenu if there is more than one possible monitor to connect to
+nscreens="$(xrandr -q | grep ' connected' | grep -v $prime | wc -l)"
+if [[ "$nscreens" == "0" ]]; then
+	xrandr --auto
+	else
+	if [[ "$nscreens" == "1" ]]; then
+		screen="$(xrandr -q | grep ' connected' | grep -v '$prime' | awk '{print $1}')"
+	else
+		screen="$(xrandr -q | grep ' connected' | grep -v '$prime' | awk '{print $1}' | dmenu -p 'select monitor: ')"
+	fi
+	
+	# Second screen 
+	if [[ "$@" == "--mirror" ]]; then
+		xrandr --output $screen --auto  --same-as $prime
+	else
+		xrandr --output $screen --auto  --above $prime
+		moveWorkspace 3 $screen
+		moveWorkspace 4 $screen
+		moveWorkspace 5 $screen
+		moveWorkspace 8 $screen
+	fi
+fi
