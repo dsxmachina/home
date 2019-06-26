@@ -13,9 +13,9 @@ if [[ "$nscreens" == "0" ]]; then
 	xrandr --auto
 	else
 	if [[ "$nscreens" == "1" ]]; then
-		screen="$(xrandr -q | grep ' connected' | grep -v '$prime' | awk '{print $1}')"
+		screen="$(xrandr -q | grep ' connected' | grep -v $prime | awk '{print $1}')"
 	else
-		screen="$(xrandr -q | grep ' connected' | grep -v '$prime' | awk '{print $1}' | dmenu -p 'select monitor: ')"
+		screen="$(xrandr -q | grep ' connected' | grep -v $prime | awk '{print $1}' | dmenu -p 'select monitor: ')"
 	fi
 	
 	# Second screen 
