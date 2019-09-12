@@ -1,0 +1,3 @@
+#!/bin/bash
+
+[[ $@ =~ .*youtube.com.* ]] && youtube-dl --extract-audio --audio-format mp3 --output "~/Musik/%(title)s.%(ext)s" "$@"

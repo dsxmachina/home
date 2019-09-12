@@ -48,15 +48,19 @@ This function should only modify configuration layer settings."
      git
      markdown
      org
+     python
      (shell :variables
             shell-default-height 30
             shell-default-shell 'eshell
             shell-default-position 'bottom)
      ;; spell-checking
      syntax-checking
-     (c-c++ :variables c-c++-enable-clang-support t)
+     (c-c++ :variables
+            c-c++-enable-clang-support t
+            c-c++-enable-rtags-completion t)
      haskell
      treemacs
+     spacemacs-cmake-ide
      ;; version-control
      )
 
@@ -190,8 +194,8 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(spacemacs-dark-even-darker-now
+                         spacemacs-dark)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -429,6 +433,9 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (spacemacs/set-default-font dotspacemacs-default-font)
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+  (setq-default git-magit-status-fullscreen t)
+  (push "/usr/local/share/emacs/site-lisp/rtags" load-path)
 )
 
 (defun dotspacemacs/user-load ()
@@ -445,6 +452,9 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  ;; Transparenz
+  (spacemacs/enable-transparency)
+  (add-hook 'after-make-frame-functions 'spacemacs/enable-transparency)
   ;; JK Als Escape-Sequenz
   (setq-default evil-escape-key-sequence "jk")
   ;; Custom Window Kram
@@ -502,15 +512,16 @@ you should place your code here."
   (setq ranger-max-preview-size 10)
   ;; Projectile
   (setq projectile-require-project-root t)
-  (setq projectile-project-root-files #'( ".projectile" "Makefile" "CMakeLists.txt"))
-  (setq projectile-project-root-files-functions #'(projectile-root-top-down
-                                                   projectile-root-top-down-recurring
-                                                   projectile-root-bottom-up
-                                                   projectile-root-local))
+  (setq projectile-indexing-method 'hybrid)
+  (setq projectile-project-root-files '( ".projectile" "Makefile" "CMakeLists.txt"))
+  (setq projectile-project-root-files-functions '(projectile-root-top-down
+                                                  projectile-root-top-down-recurring
+                                                  projectile-root-bottom-up
+                                                  projectile-root-local))
   ;; (setq projectile-indexing-method 'native)
   (setq projectile-project-compilation-cmd "cmake --build .")
   ;; Org-Stuff
-  (setq org-todo-keywords '((sequence "TODO" "TERMIN:" "|" "DONE" "CANCELLED")))
+  (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "TERMIN:" "|" "DONE" "CANCELLED")))
   ;; (with-eval-after-load 'org-agenda
   ;;   (require 'org-projectile)
   ;;   (push (org-projectile:todo-files) org-agenda-files))
@@ -527,7 +538,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (spacemacs-dark)))
+ '(custom-enabled-themes (quote (spacemacs-dark-even-darker-now)))
  '(custom-safe-themes
    (quote
     ("76c3ce9be3ac817677cbc90d765743c6ce8d6841109c863e674a6f83158123e3" "afc8b7b7e70b360c800360352d279dbecf1887f4c2aff50cc5f621b1e854f7f2" "a739dad48fa2f080e3e037b630e28eae755591d301c7f356ad757c3e8c019612" "241166f2cff435fd867222c691efdf19d3c1686f09d92fb1cea684aca290275f" "84956cfb1a21449a70ff29727619cb09ebc20cf13e20f1bab82e6755c7480b31" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
@@ -545,3 +556,86 @@ you should place your code here."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(ansi-term-color-vector
+   [unspecified "#14191f" "#d15120" "#81af34" "#deae3e" "#7e9fc9" "#a878b5" "#7e9fc9" "#dcdddd"] t)
+ '(company-quickhelp-color-background "#4F4F4F")
+ '(company-quickhelp-color-foreground "#DCDCCC")
+ '(custom-enabled-themes (quote (spacemacs-dark-even-darker-now)))
+ '(custom-safe-themes
+   (quote
+    ("76c3ce9be3ac817677cbc90d765743c6ce8d6841109c863e674a6f83158123e3" "afc8b7b7e70b360c800360352d279dbecf1887f4c2aff50cc5f621b1e854f7f2" "a739dad48fa2f080e3e037b630e28eae755591d301c7f356ad757c3e8c019612" "241166f2cff435fd867222c691efdf19d3c1686f09d92fb1cea684aca290275f" "84956cfb1a21449a70ff29727619cb09ebc20cf13e20f1bab82e6755c7480b31" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+ '(evil-want-Y-yank-to-eol nil)
+ '(fci-rule-character-color "#192028")
+ '(fci-rule-color "#556873")
+ '(hl-todo-keyword-faces
+   (quote
+    (("TODO" . "#dc752f")
+     ("NEXT" . "#dc752f")
+     ("THEM" . "#2d9574")
+     ("PROG" . "#4f97d7")
+     ("OKAY" . "#4f97d7")
+     ("DONT" . "#f2241f")
+     ("FAIL" . "#f2241f")
+     ("DONE" . "#86dc2f")
+     ("NOTE" . "#b1951d")
+     ("KLUDGE" . "#b1951d")
+     ("HACK" . "#b1951d")
+     ("TEMP" . "#b1951d")
+     ("FIXME" . "#dc752f")
+     ("XXX" . "#dc752f")
+     ("XXXX" . "#dc752f"))))
+ '(jdee-db-active-breakpoint-face-colors (cons "#0d0f11" "#7FC1CA"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#0d0f11" "#A8CE93"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#0d0f11" "#899BA6"))
+ '(nrepl-message-colors
+   (quote
+    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(objed-cursor-color "#DF8C8C")
+ '(org-agenda-files (quote ("~/Projekte/agenda.org" "~/Projekte/termine.org")))
+ '(package-selected-packages
+   (quote
+    (company-irony irony cmake-ide levenshtein helm-ag-r lv intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme spotify helm-spotify-plus multi ranger smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md disaster company-c-headers cmake-mode clang-format xterm-color shell-pop multi-term helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+ '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
+ '(vc-annotate-background "#3c4c55")
+ '(vc-annotate-color-map
+   (list
+    (cons 20 "#A8CE93")
+    (cons 40 "#b8d293")
+    (cons 60 "#c9d693")
+    (cons 80 "#DADA93")
+    (cons 100 "#e2d291")
+    (cons 120 "#eaca90")
+    (cons 140 "#F2C38F")
+    (cons 160 "#e4bea4")
+    (cons 180 "#d6b9b9")
+    (cons 200 "#c9b4cf")
+    (cons 220 "#d0a6b8")
+    (cons 240 "#d799a2")
+    (cons 260 "#DF8C8C")
+    (cons 280 "#c98f92")
+    (cons 300 "#b39399")
+    (cons 320 "#9e979f")
+    (cons 340 "#556873")
+    (cons 360 "#556873")))
+ '(vc-annotate-very-old-color nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+)

@@ -30,4 +30,4 @@ fi
 
 conn="$(nmcli networking connectivity)"
 [[ "$conn" == "full" ]] && printf "[\u25cf]" || printf "[\u25bc]"
-
+printf "\n"

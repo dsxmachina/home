@@ -1,0 +1,4 @@
+#!/bin/bash
+
+unoconv -o /tmp/pdf2read.pdf "$@" 
+zathura /tmp/pdf2read.pdf

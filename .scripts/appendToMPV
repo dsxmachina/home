@@ -1,0 +1,23 @@
+#!/bin/bash
+clip="$@"
+echo $clip
+lastItem=""
+running="$(pgrep mpv)"
+echo $running
+if [[ -z $running ]]; then
+	notify-send "playing " $clip
+	mpv --input-ipc-server=/tmp/mpvsoc$(date +$%s) $clip
+else
+	if [ -e "$HOME/.scripts/.addHistory" ]; then
+		lastItem=$(cat "$HOME/.scripts/.addHistory")
+	fi
+	if [[ $clip = $lastItem ]]; then
+		notify-send $clip "has already been added"
+	else
+		notify-send $clip "added"
+		for i in $(ls /tmp/mpvsoc*); do
+			echo '{ "command": ["loadfile", "'`xclip -o`'", "append-play"] }' | socat - $i; 
+		done
+		echo $clip > "$HOME/.scripts/.addHistory"
+	fi
+fi

@@ -35,7 +35,7 @@ interval=1800
 # Volume indicator
 [volumeBlocks]
 instance=Master
-interval=once
+interval=60
 signal=10
 color=#FF5000
 

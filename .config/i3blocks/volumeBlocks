@@ -77,4 +77,5 @@ else
 	printf "%0.s-" $(seq 1 $rst)
 fi
 fi
-printf "]"
+printf "]\n"
+
