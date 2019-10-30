@@ -1,0 +1,14 @@
+## SMTP:
+
+set my_user 	   = username
+set smtp_pass      = your_password
+set realname 	   = 'Real Name'
+set from 	   = username@mailadress.com
+set use_from 	   = yes
+
+set smtp_url	   = smtp://$my_user:$smtp_pass@localhost:1025
+set ssl_force_tls = no
+
+set spoolfile      = "+ThisMailbox/INBOX"
+set record         = "+ThisMailbox/Sent"
+set postponed      = "+ThisMailbox/Drafts"

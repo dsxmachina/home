@@ -1,0 +1,17 @@
+# Sent-Options and stuff
+
+set my_user= user_name
+set realname = 'Real Name'
+set from = user.name@mail.com
+set use_from = yes
+set smtp_pass = your_password
+
+# 465 oder 587?
+set smtp_url=smtps://$my_user:$smtp_passM@your_mailserver.com:465
+set ssl_force_tls = yes
+
+set smtp_authenticators = 'gssapi:login'
+
+set spoolfile        = "+ThisMailbox/INBOX"
+set record           = "+ThisMailbox/INBOX/Sent"
+set postponed        = "+ThisMailbox/INBOX/Drafts"

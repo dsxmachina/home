@@ -1,0 +1,85 @@
+# Offlineimap soll die folgenden beiden Accounts synchronisieren,
+# die wir gleich definieren. Lasst ihr die »2« weg, wird nur der
+# Erste der beiden Accounts synchronisiert, wenn ihr es euch nicht
+# explizit per Kommandozeile wünscht.
+
+[general]
+accounts = Acc1, Acc2
+maxsyncaccounts = 2
+
+# Die beiden Accounts - hierbei handelt es sich nur um eine
+# Verknüpfung aus einer lokalen Quelle (privat-local) und
+# einer Remote-Quelle (privat-remote).
+
+[Account Acc1]
+localrepository  = Acc1-local
+remoterepository = Acc1-remote
+#autorefresh      = 0.5
+#quick		 = 10
+
+[Account Acc2]
+localrepository  = Acc2-local
+remoterepository = Acc2-remote
+#autorefresh      = 1
+#quick 		 = 10
+
+# Das beiden "Repositories" - dies sind lediglich Ordner in eurem
+# Dateisystem, in denen Offlineimap für euch dann eine Ordnerstruktur
+# erstellt. Für Mutt möchte ich gerne das Format "Maildir" und das
+# ganze soll in ~/Documents/Mail abgelegt werden.
+
+[Repository Acc1-local]
+type         = Maildir
+localfolders = ~/.Maildir/Acc1/
+#startdate    = 2019-01-01
+
+[Repository Acc2-local]
+type         = Maildir
+localfolders = ~/.Maildir/Acc2/
+#startdate    = 2019-01-01
+
+# Jetzt die beiden IMAP Zugänge. Achtet darauf dass ihr SSL aktiviert
+# :-) Damit offlineimap etwas schneller arbeitet, könnt ihr mehrere
+# Connections erlauben (probiert einfach mal mit maxconnections
+# herum). In meinem IMAP Workflow verwende ich Archiv-Ordner für jedes
+# Jahr, die möchte ich natürlich nicht in jedem Lauf synchronsisieren,
+# daher der folderfilter.
+
+[Repository Acc1-remote]
+type               = IMAP
+ssl                = no
+remotehost         = localhost
+remoteport	   = 1143
+remoteuser         = 
+remotepass         =
+maxconnections     = 5
+holdconnectionopen = yes
+keepalive 	   = 60
+folderfilter = lambda foldername: foldername not in ['Junk', 'Synchronisierungsprobleme', 'Synchronisierungsprobleme/Konflikte', 'Synchronisierungsprobleme/Serverfehler', 'Synchronisierungsprobleme/Lokale Fehler'  , 'Trash', 'Unsent Messages']
+
+[Repository Acc2-remote]
+type               = IMAP
+ssl                = yes
+remotehost         = 
+remoteport	   = 993
+remoteuser         = 
+remotepass         =
+maxconnections     = 5
+holdconnectionopen = yes
+keepalive 	   = 60
+# Folders to skip during sync.
+folderfilter = lambda foldername: foldername not in ['Junk', 'Amazon', 'Praktika', 'Semesterticket', 'Trash', 'Unsent Messages']
+sslcacertfile = /usr/local/etc/openssl/cert.pem
+
+# Und nun das Feintuning. Offlineimap schreibt in ~/.mutt/mailboxes alle
+# Mailboxen auf, damit Mutt seine gewünschte Ordner-Struktur
+# vorfindet. Das ist das entscheidende Stückchen Gluecode.  :-)
+
+[mbnames]
+enabled  = yes
+filename = ~/.mutt/mailboxes
+header   = "mailboxes "
+peritem  = "+%(accountname)s/%(foldername)s"
+sep      = " "
+footer   = "\n"
+

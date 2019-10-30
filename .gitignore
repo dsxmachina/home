@@ -15,10 +15,23 @@
 !.config/ranger
 !.config/twmn
 
+# ... custom keyboard layout
+!.config/pc
+!.config/de
+
 # ... custom scripts ...
 !.scripts
 
+# ... mail shit ...
+!.mutt/
+.mutt/*
+!.mutt/.example_davmail
+!.mutt/.example_mail_smtp
+!.mutt/.example_offlineimaprc
+!.mutt/mailcap
+
 # ... basic stuff ...
+!.bash_aliases
 !.bash_profile
 !.bashrc
 !.fonts.conf
