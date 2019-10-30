@@ -28,19 +28,19 @@ function ranger-cd {
     rm -f -- "$tempfile"
 }
 
-alias ls='ls --color=auto'
-alias ranger='ranger-cd'
-alias mpv="mpv --input-ipc-server=/tmp/mpvsoc$(date +%s)"
-# Shortcuts:
-alias gci="vim ~/.config/i3/config"
-alias gcr="vim ~/.config/ranger/rc.conf"
-alias pac="sudo pacman"
-# NetworkManager.service
-alias nmstart="sudo systemctl start NetworkManager.service"
-alias nmstop="sudo systemctl stop NetworkManager.service"
-# Mutt saves into "Dokumente"
-alias neomutt="cd $HOME/Dokumente/;neomutt"
 # Actually forgot what that is
 PS1='[\u@\h \W]\$ '
 
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+# All things that you want to add to the path on login add before this comment!
+RVG_PATH=$PATH
+RVG_LIBRARY_PATH=$LIBRARY_PATH
+RVG_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"/usr/lib/pkgconfig"
+
+# Cuda-Path
+# export PATH=$PATH:/opt/cuda/bin
