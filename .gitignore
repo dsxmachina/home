@@ -3,6 +3,7 @@
 
 # ... gitignore ...
 !.gitignore
+!spacemacs-stuff
 
 # ... i3, i3blocks, mpv, ranger & twmn ...
 !.config/
