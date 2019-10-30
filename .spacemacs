@@ -39,29 +39,38 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     ;; kinda useless but funny
      themes-megapack
-     helm
-     auto-completion
-     ranger
      spotify
-     emacs-lisp
+     ;; Programming features
+     (auto-completion :variables auto-completion-enable-snippets-in-popup t)
+     syntax-checking
+     spacemacs-cmake-ide
+     ;; (cmake :variables cmake-enable-cmake-ide-support t)
      git
+     debug
+     ;; making everything better
+     helm
+     ranger
+     treemacs
+     ;; Languages
+     (c-c++ :variables
+            c-c++-default-mode-for-headers 'c++-mode
+            c-c++-enable-clang-support t
+            c-c++-backend 'rtags
+            c-c++-enable-rtags-completion nil)
+     haskell
+     emacs-lisp
      markdown
      org
      python
+     csharp
+     ;;gpu
+     ;; allmighty shell
      (shell :variables
             shell-default-height 30
             shell-default-shell 'eshell
             shell-default-position 'bottom)
-     ;; spell-checking
-     syntax-checking
-     (c-c++ :variables
-            c-c++-enable-clang-support t
-            c-c++-enable-rtags-completion t)
-     haskell
-     treemacs
-     spacemacs-cmake-ide
-     ;; version-control
      )
 
    ;; List of additional packages that will be installed without being
@@ -324,12 +333,12 @@ It should only modify the values of Spacemacs settings."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 95
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 90
+   dotspacemacs-inactive-transparency 95
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -462,21 +471,25 @@ you should place your code here."
   (define-key global-map (kbd "M-j") 'windmove-down)
   (define-key global-map (kbd "M-k") 'windmove-up)
   (define-key global-map (kbd "M-l") 'windmove-right)
-  ;;(define-key global-map (kbd "C-+") 'windmove-left)
   ;; Custom Insert-Mode Kram
-  (define-key evil-insert-state-map (kbd "C-j") 'next-line)
-  (define-key evil-insert-state-map (kbd "C-k") 'previous-line)
-  (define-key evil-insert-state-map (kbd "C-l") 'evil-forward-char)
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-backward-char)
+  ;; (define-key evil-insert-state-map (kbd "C-j") 'next-line)
+  ;; (define-key evil-insert-state-map (kbd "C-k") 'previous-line)
+  ;; (define-key evil-insert-state-map (kbd "C-l") 'evil-forward-char)
+  ;; (define-key evil-insert-state-map (kbd "C-h") 'evil-backward-char)
   ;; Custom Kommentar kram
   (define-key evil-normal-state-map (kbd "-") 'evilnc-comment-operator)
   (define-key evil-visual-state-map (kbd "-") 'evilnc-comment-operator)
   ;; Spaces am Ende entfernen
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  ;; go-to-definition im c++ mode über rtags
+  (define-key evil-normal-state-map (kbd "gd") 'rtags-find-symbol-at-point)
   ;; Eigenes Menü mit "SPC+o"
   (spacemacs/declare-prefix "o" "own stuff")
   (spacemacs/set-leader-keys "op" 'org-pomodoro)
-  (spacemacs/set-leader-keys "om" 'org-agenda-month-view)
+  (spacemacs/set-leader-keys "oc" 'cmake-ide-compile)
+  (spacemacs/set-leader-keys "oC" 'cmake-ide-run-cmake)
+  ;; (spacemacs/set-leader-keys "oc" 'cmake-ide-)
+  ;; (spacemacs/set-leader-keys "om" 'org-agenda-month-view)
   ;; Fancy-Auto-Alignment
   ;; (defun align-regexp-between (start end regexpBefore regexpAfter)
   ;;   "Repeat alignment with respect to the given regular expression."
@@ -513,12 +526,13 @@ you should place your code here."
   ;; Projectile
   (setq projectile-require-project-root t)
   (setq projectile-indexing-method 'hybrid)
-  (setq projectile-project-root-files '( ".projectile" "Makefile" "CMakeLists.txt"))
+  (setq projectile-project-root-files '( ".dir-locals.el" "Makefile" "CMakeLists.txt"))
   (setq projectile-project-root-files-functions '(projectile-root-top-down
                                                   projectile-root-top-down-recurring
                                                   projectile-root-bottom-up
                                                   projectile-root-local))
   ;; (setq projectile-indexing-method 'native)
+  ;; (setq projectile-project-compilation-cmd "cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 . && make")
   (setq projectile-project-compilation-cmd "cmake --build .")
   ;; Org-Stuff
   (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "TERMIN:" "|" "DONE" "CANCELLED")))
@@ -577,7 +591,7 @@ This function is called at the very end of Spacemacs initialization."
  '(custom-enabled-themes (quote (spacemacs-dark-even-darker-now)))
  '(custom-safe-themes
    (quote
-    ("76c3ce9be3ac817677cbc90d765743c6ce8d6841109c863e674a6f83158123e3" "afc8b7b7e70b360c800360352d279dbecf1887f4c2aff50cc5f621b1e854f7f2" "a739dad48fa2f080e3e037b630e28eae755591d301c7f356ad757c3e8c019612" "241166f2cff435fd867222c691efdf19d3c1686f09d92fb1cea684aca290275f" "84956cfb1a21449a70ff29727619cb09ebc20cf13e20f1bab82e6755c7480b31" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+    ("4991080f071c38346474dd568666326147d9806f2448e9187f39bfe629938e5e" "76c3ce9be3ac817677cbc90d765743c6ce8d6841109c863e674a6f83158123e3" "afc8b7b7e70b360c800360352d279dbecf1887f4c2aff50cc5f621b1e854f7f2" "a739dad48fa2f080e3e037b630e28eae755591d301c7f356ad757c3e8c019612" "241166f2cff435fd867222c691efdf19d3c1686f09d92fb1cea684aca290275f" "84956cfb1a21449a70ff29727619cb09ebc20cf13e20f1bab82e6755c7480b31" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(evil-want-Y-yank-to-eol nil)
  '(fci-rule-character-color "#192028")
  '(fci-rule-color "#556873")
@@ -608,8 +622,15 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files (quote ("~/Projekte/agenda.org" "~/Projekte/termine.org")))
  '(package-selected-packages
    (quote
-    (company-irony irony cmake-ide levenshtein helm-ag-r lv intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme spotify helm-spotify-plus multi ranger smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md disaster company-c-headers cmake-mode clang-format xterm-color shell-pop multi-term helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+    (lsp-ui ccls helm-ag-r lv intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme spotify helm-spotify-plus multi ranger smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md disaster company-c-headers cmake-mode clang-format xterm-color shell-pop multi-term helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
+ '(safe-local-variable-values
+   (quote
+    ((helm-make-arguments . "-j12")
+     (helm-make-build-dir . "build/release")
+     (projectile-project-run-cmd . "./build/release/trajectoryHandler")
+     (projectile-project-name . "trajectoryHandler")
+     (cmake-ide-build-dir . /home/machina/Projekte/ueye/navcam/))))
  '(vc-annotate-background "#3c4c55")
  '(vc-annotate-color-map
    (list
