@@ -30,6 +30,11 @@
 !.mutt/.example_offlineimaprc
 !.mutt/mailcap
 
+# ... spacemacs theme! ...
+!.emacs.d/
+.emacs.d/*
+!.emacs.d/spacemacs-dark-even-darker-now-theme.el
+
 # ... basic stuff ...
 !.bash_aliases
 !.bash_profile
