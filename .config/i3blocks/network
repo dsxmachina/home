@@ -6,7 +6,7 @@ output="$(nmcli connection show --active | tail -1)"
 name="$(echo $output | awk '{print $1}')"
 interface="$(echo $output | awk '{print $4}')"
 vs="\u25a0"
-if [[ "$name" == "Kabelgebundene" ]]; then
+if [[ "$name" == "Ethernet" ]]; then
 	printf "[\u25a1$vs$vs\u25a1]"
 elif [[ "$interface" == "wlo1" ]]; then
 	signal=$(nmcli device wifi list ifname wlo1 | grep "*")

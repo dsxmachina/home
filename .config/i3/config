@@ -223,7 +223,7 @@ bindsym $mod+g exec --no-startup-id gapswitch
 bindsym Mod1+m exec dmenumount
 bindsym Mod1+Shift+m exec dmenuunmount
 # Kill process with dmenu:
-bindsym Mod1+k exec dmenukill
+bindsym Mod1+Shift+k exec dmenukill
 # Select network with dmenu:
 bindsym Mod1+n exec urxvt -name dropdown_wifi -e dmenuwifi
 # change to random bg:
@@ -331,7 +331,7 @@ mode "$mode_system" {
     bindsym l exec --no-startup-id $Locker, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
     bindsym Delete exec --no-startup-id $Locker && systemctl suspend, mode "default"
-    #bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
     bindsym s exec --no-startup-id systemctl poweroff -i, mode "default"  
 
