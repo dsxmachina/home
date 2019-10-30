@@ -65,7 +65,6 @@ dmenuMonitor --mirror
 
 I often use opencv in c++ projects and build them with cmake. Since the CMakeLists.txt always looks almost the same,
 i wrote this litte script to make the whole process faster.
-My projects are all located in "~/Projekte" and sorted in seperate subfolders like "~/Projekte/Category/Sub-Project/".
 This script asks you for a project name, a category (which is a subfolder in my project folder) and if you want to add any libraries
 (which i always put under /usr/lib). After that it creates the project folder in the given category folder, puts a main.cpp, project_name.h, project_name.cpp there and creates a simple CMakeLists.txt accordingly (links the libraries and opencv).
 I don't know if this is useful to anyone else, but ... meh.
