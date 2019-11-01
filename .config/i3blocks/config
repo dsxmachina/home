@@ -37,32 +37,23 @@ interval=1800
 instance=Master
 interval=60
 signal=10
-color=#FF5000
+color=#FF2000
 
-# Memory usage
-# The type defaults to "mem" if the instance is not specified.
+# Memory Usage
 [memory]
-label=MEMORY:
+label=M3M-
 interval=30
-color=#FF5500
+color=#FF2000
 
 # Network interface monitoring
-[network]
-interval=30
-color=#DD7722
-
-# Battery indicator
-#
-# The battery instance defaults to 0.
-[battery]
-instance=0
-interval=30
-color=#BB9944
+#[network]
+#interval=30
+#color=#FF2000
 
 # Date Time
 [time]
 label=TIME:
 command=date '+%d-%m-%Y %H:%M'
 interval=5
-color=#AAAA55
+color=#FF2000
 

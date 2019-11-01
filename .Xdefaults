@@ -27,18 +27,18 @@
 *color14:               #A19A93
 
 !! white dark/light
-*color7:                #FF8000
-*color15: 		#FF8000
+*color7:                #FF2222
+*color15: 		#FFDDDD
 
 !! fg bg
 foreground:		#DDDDDD
 background:		#000000
 
 !! Appearance:
-URxvt.foreground: 	#FF8000
+URxvt.foreground: 	#FF2222
 URxvt.background: 	[80]#000000
 URxvt.depth: 		32
-URxvt.font: 		xft:source code pro:size=12
+URxvt.font: 		xft:source code pro:size=20
 URxvt.scrollBar: 	false
 URxvt.iso14755: 	false
 URxvt.iso14755_52: 	false
@@ -51,7 +51,7 @@ URxvt.url-select.launcher:	/usr/bin/xdg-open
 URxvt.url-select.underline:	true
 !! keyboard-select:
 URxvt.keysym.M-v:		perl:keyboard-select:activate !!!! resize-font:
-URxvt*resize-font*smaller:	M-plus
+URxvt.resize-font.smaller:	M-plus
 URxvt.resize-font.bigger:	M-down
 !! matcher
 URxvt.url-launcher:		/usr/bin/xdg-open
