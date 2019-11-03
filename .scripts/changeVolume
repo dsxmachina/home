@@ -15,4 +15,3 @@ elif [[ $@ =~ ^u$ ]]; then
 else
 	echo "Wrong input format. Use \"+/-(0-99)\" for adjusting volume, \"m\" for muting and \"u\" for unmuting"
 fi
-

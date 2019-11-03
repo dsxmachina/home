@@ -20,9 +20,10 @@ smart_borders on
 # Startup:
 exec --no-startup-id unclutter
 exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
-exec --no-startup-id twmnd
-#exec --no-startup-id ~/.fehbg
+exec --no-startup-id dunst
+exec --no-startup-id "$HOME/.config/i3blocks/randomBackground"
 #exec --no-startup-id conky
+exec --no-startup-id firefox
 exec --no-startup-id urxvt -name dropdown_terminal
 #-- 
 
@@ -174,6 +175,7 @@ for_window [instance="conky"] scratchpad show
 
 
 # --- Keybindings:
+bindsym 0x1008ff26 exec showTime
 # kill focused window
 bindsym $mod+q kill
 # start dmenu (a program launcher)
