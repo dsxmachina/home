@@ -19,7 +19,7 @@ mkdir $newDir/build/debug
 
 
 # Fill CMakeLists.txt with stuff from template
-cmake_template=$(<$HOME/.scripts/CMakeLists.txt_template)
+cmake_template=$(<$HOME/.scripts/files/CMakeLists.txt_template)
 echo -e "${cmake_template//xPROJECTNAMEx/$projName}" > "$newDir/CMakeLists.txt"
 
 if [[ "$nlibs" == "0" ]]; then

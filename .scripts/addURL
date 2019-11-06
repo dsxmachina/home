@@ -12,8 +12,8 @@ if [[ ! $clip =~ .*www.youtube.com.* ]]; then
 fi 
 notify-send -u low "Checking for title..."
 title=`youtube-dl --skip-download --get-title $clip`
-file=$HOME/.scripts/watchlist.txt
-tagfile=$HOME/.scripts/TAGS.txt
+file=$HOME/.scripts/files/watchlist.txt
+tagfile=$HOME/.scripts/files/TAGS.txt
 knownTags=$(cat $tagfile)
 # check for title
 if [[ -e $file ]]; then

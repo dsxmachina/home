@@ -1,5 +1,5 @@
 #!/bin/bash
-file=$HOME/.scripts/watchlist.txt
+file=$HOME/.scripts/files/watchlist.txt
 if [[ ! -e $file ]]; then
 	notify-send "No watchlist file!"
 	exit 1

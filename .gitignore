@@ -22,6 +22,8 @@
 
 # ... custom scripts ...
 !.scripts
+.scripts/files
+.scripts/testbed.sh
 
 # ... mail shit ...
 !.mutt/
