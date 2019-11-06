@@ -1,8 +1,53 @@
 #!/bin/bash
+# Script to add stuff into watchlist with tags
+# if input is not empty, use input tags
+# otherwise use dmenu to add tags
+# Call with 'once', to mark non-persistent Videos
+# tags 'music' and 'persistent' will not be deleted after watching
 clip=$(xclip -o)
-if [[ $clip =~ .*www.youtube.com.* ]]; then
-	appendToMPV $clip
-else
+# youtube only
+if [[ ! $clip =~ .*www.youtube.com.* ]]; then
 	notify-send "No YouTube-link in clipboard"
+	exit 1
 fi 
+notify-send -u low "Checking for title..."
+title=`youtube-dl --skip-download --get-title $clip`
+file=$HOME/.scripts/watchlist.txt
+tagfile=$HOME/.scripts/TAGS.txt
+knownTags=$(cat $tagfile)
+# check for title
+if [[ -e $file ]]; then
+	foundIt=$(cat $file | grep $clip)
+	echo $foundIt
+	# if video is already in the watchlist -> exit
+	if [[ ! -z "$foundIt" ]]; then
+		notify-send -u low "title is already in watchlist"
+		exit 0
+	fi
+fi
+# Ask for tags
+if [[ -z "$@" ]]; then
+	oneTag=""
+	tags=""
+	while [[ $oneTag != "none" ]]; do
+		oneTag=$(cat $tagfile | dmenu -i -p tags:)
+		tags="$oneTag, $tags"
+		# keep tag, if new
+		grep -q $oneTag $tagfile || echo $oneTag >> $tagfile
+		knownTags=$(cat $tagfile)
+	done
+	tags=${tags::-2}
+else
+	echo "foo -$@-"
+	tags="none, $@"
+fi
+# add to watchlist with given tags
+if [[ ! -e $file ]]; then
+	echo -e ">>> $title\n$clip\nTags: $tags" > $file
+	notify-send "made new watchlist."
+	notify-send "added: $title"
+else
+	echo -e ">>> $title\n$clip\nTags: $tags" >> $file
+	notify-send "added: $title"
+fi
 

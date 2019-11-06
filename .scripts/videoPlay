@@ -1,0 +1,13 @@
+#!/bin/bash
+clip="$1"
+title="$2"
+lastItem=""
+running="$(pgrep mpv)"
+echo "MPV running w. process id: $running"
+if [[ -z $running ]]; then
+	notify-send "playing: '$title'"
+	mpv  --input-ipc-server=/tmp/mpvsock $clip
+else
+	notify-send "added: $clip"
+	echo '{ "command": ["loadfile", "'$clip'", "append-play"] }' | socat - /tmp/mpvsock; 
+fi

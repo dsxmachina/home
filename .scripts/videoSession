@@ -1,0 +1,37 @@
+#!/bin/bash
+file=$HOME/.scripts/watchlist.txt
+if [[ ! -e $file ]]; then
+	notify-send "No watchlist file!"
+	exit 1
+fi
+# reformat watchfile input for dmenu
+dmenuString=""
+while read -r ONE; do
+	if [[ $ONE =~ ">>>" ]]; then
+		read -r TWO
+		read -r THREE
+		title=${ONE/>>> /}
+		#title=$ONE
+		# make title a fixed length
+		if (( ${#title} < 60 )); then
+			title=$(printf '%-60s' "$title")
+		else
+			title="${title:0:57}..."
+		fi
+		dmenuString="$dmenuString $title :: $THREE :: URL: $TWO\n"
+	fi
+done < $file
+# choose video
+chosen=$(echo -e "$dmenuString" | dmenu -i -l 15)
+if [[ -z "$chosen" ]]; then
+	echo "nothing chosen"
+	exit 0
+fi
+# parse string
+title=$(awk -F:: '{print $1}' <<< $chosen)
+tags=$(awk -F:: '{print $2}' <<< $chosen)
+url=$(awk 'NF>1{print $NF}' <<< $chosen)
+# TODO: If !music or !persistent -> delete from list
+#sed -i "/$title/,+2d" $file
+# play video
+videoPlay $url $title
