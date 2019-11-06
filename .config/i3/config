@@ -194,8 +194,11 @@ bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
 bindsym $mod+BackSpace exec i3-sensible-terminal -e htop
 bindsym $mod+w exec --no-startup-id firefox
 bindsym $mod+Shift+w exec --no-startup-id firefox -private-window
-# MPV-addURL:
+# Add to watchlist:
 bindsym $mod+a exec --no-startup-id addURL
+bindsym $mod+Shift+a exec --no-startup-id addURL once
+# Play from watchlist:
+bindsym $mod+y exec videoSession
 # Gap-Keybindings:
 bindsym $mod+g exec --no-startup-id gapswitch
 #bindsym $mod+0x2b gaps inner current plus 5
