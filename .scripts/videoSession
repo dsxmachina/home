@@ -13,11 +13,12 @@ while read -r ONE; do
 		title=${ONE/>>> /}
 		#title=$ONE
 		# make title a fixed length
-		if (( ${#title} < 60 )); then
-			title=$(printf '%-60s' "$title")
+		if (( ${#title} < 70 )); then
+			title=$(printf '%-70s' "$title")
 		else
-			title="${title:0:57}..."
+			title="${title:0:64}..."
 		fi
+		title="${title:0:67}"
 		dmenuString="$dmenuString $title :: $THREE :: URL: $TWO\n"
 	fi
 done < $file
