@@ -38,7 +38,7 @@ background:		#000000
 URxvt.foreground: 	#FF8000
 URxvt.background: 	[80]#000000
 URxvt.depth: 		32
-URxvt.font: 		xft:source code pro:size=12
+URxvt.font: 		xft:source code pro:size=13
 URxvt.scrollBar: 	false
 URxvt.iso14755: 	false
 URxvt.iso14755_52: 	false

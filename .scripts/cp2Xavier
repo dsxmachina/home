@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#src="$@"
+#[[ -z "$@" ]] && ip="10.64.82.192" || ip="$@"
+ip="10.64.82.192"
+src="$(pwd)"
+echo "Copying '$src' to Xavier" 
+dst="/home/nvidia/Code"
+user="nvidia"
+base="$(basename $src)"
+cmd="cd $dst/$base/build/release/; cmake ../..; touch *; make -j$(nproc); $@"
+if [[ $SSHPASS == "" ]]; then
+	#read -s -p "Password:" sshpw
+	sshpw="nvidia"
+	sshpass -p $sshpw rsync -avz --exclude CMakeLists.txt --exclude build --exclude uEye_doc --exclude .git -e 'ssh' $src $user@$ip:$dst
+	sshpass -p $sshpw ssh -Y -t $user@$ip $cmd
+else
+	sshpass -e rsync -avz --exclude CMakeLists.txt --exclude build --exclude uEye_doc --exclude .git -e 'ssh' $src $user@$ip:$dst
+	sshpass -e ssh -Y -t $user@$ip $cmd
+fi

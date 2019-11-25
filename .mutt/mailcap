@@ -1,0 +1,5 @@
+text/html; w3m -I %{charset} -T text/html; copiousoutput
+#image/*; muttimg %s ; copiousoutput
+#text/calendar; lynx -dump  %s; copiousoutput
+text/calendar; ~/Projekte/muttappoint/build/appointment_handler %s; copiousoutput
+application/x-pkcs7-signature;openssl pkcs7 -in %s -inform der -noout \ -print_certs -text | less; needsterminal

@@ -1,0 +1,7 @@
+#!/bin/bash
+#i3-msg workspace $ws5 && sleep 0.1 && 
+urxvt -n "mpv_player" -e mpv "$@" &
+vis_running="$(pgrep vis)"
+if [[ -z $vis_running ]]; then
+	urxvt -n "vis" -e vis &
+fi

@@ -33,39 +33,37 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
-     ;; ----------------------------------------------------------------
+   '(;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
-     ;; kinda useless but funny
-     themes-megapack
-     spotify
-     ;; Programming features
-     (auto-completion :variables auto-completion-enable-snippets-in-popup t)
-     syntax-checking
-     spacemacs-cmake-ide
-     ;; (cmake :variables cmake-enable-cmake-ide-support t)
      git
      debug
      ;; making everything better
      helm
      ranger
      treemacs
+     ;; Programming features
+     (cmake :variables cmake-enable-cmake-ide-support t)
+     (auto-completion :variables auto-completion-enable-snippets-in-popup nil
+                      auto-completion-enable-help-tooltip t)
+     syntax-checking
      ;; Languages
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t
             c-c++-backend 'rtags
-            c-c++-enable-rtags-completion nil)
+            c-c++-enable-rtags-completion t)
      haskell
      emacs-lisp
      markdown
      org
      python
      csharp
-     ;;gpu
+     vimscript
+     systemd
+     ;; spacemacs-cmake-ide
      ;; allmighty shell
      (shell :variables
             shell-default-height 30
@@ -390,18 +388,18 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server nil
+   dotspacemacs-enable-server t
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
    ;; like \"~/.emacs.d/server\". It has no effect if
    ;; `dotspacemacs-enable-server' is nil.
    ;; (default nil)
-   dotspacemacs-server-socket-dir nil
+   dotspacemacs-server-socket-dir "~/.emacs.d/server"
 
    ;; If non-nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server nil
+   dotspacemacs-persistent-server t
 
    ;; List of search tool executable names. Spacemacs uses the first installed
    ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
@@ -442,9 +440,9 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (spacemacs/set-default-font dotspacemacs-default-font)
-  (add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
+  ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
   (setq-default git-magit-status-fullscreen t)
-  (push "/usr/local/share/emacs/site-lisp/rtags" load-path)
+  ;; (push "/usr/local/share/emacs/site-lisp/rtags" load-path)
 )
 
 (defun dotspacemacs/user-load ()
@@ -488,6 +486,7 @@ you should place your code here."
   (spacemacs/set-leader-keys "op" 'org-pomodoro)
   (spacemacs/set-leader-keys "oc" 'cmake-ide-compile)
   (spacemacs/set-leader-keys "oC" 'cmake-ide-run-cmake)
+  (spacemacs/set-leader-keys "or" 'projectile-run-project)
   ;; (spacemacs/set-leader-keys "oc" 'cmake-ide-)
   ;; (spacemacs/set-leader-keys "om" 'org-agenda-month-view)
   ;; Fancy-Auto-Alignment
@@ -513,8 +512,6 @@ you should place your code here."
    c-default-style "bsd"
    c-basic-offset 3
    )
-  ;; Neotree theme
-  (setq neo-theme 'ascii)
   ;; Keine Lockfiles
   (setq create-lockfiles nil)
   ;; Ranger stuff
@@ -552,7 +549,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (spacemacs-dark-even-darker-now)))
+ ;; '(custom-enabled-themes (quote (spacemacs-dark-even-darker-now)))
  '(custom-safe-themes
    (quote
     ("76c3ce9be3ac817677cbc90d765743c6ce8d6841109c863e674a6f83158123e3" "afc8b7b7e70b360c800360352d279dbecf1887f4c2aff50cc5f621b1e854f7f2" "a739dad48fa2f080e3e037b630e28eae755591d301c7f356ad757c3e8c019612" "241166f2cff435fd867222c691efdf19d3c1686f09d92fb1cea684aca290275f" "84956cfb1a21449a70ff29727619cb09ebc20cf13e20f1bab82e6755c7480b31" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
@@ -586,15 +583,46 @@ This function is called at the very end of Spacemacs initialization."
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(ansi-term-color-vector
    [unspecified "#14191f" "#d15120" "#81af34" "#deae3e" "#7e9fc9" "#a878b5" "#7e9fc9" "#dcdddd"] t)
+ '(beacon-color "#d33682")
  '(company-quickhelp-color-background "#4F4F4F")
  '(company-quickhelp-color-foreground "#DCDCCC")
- '(custom-enabled-themes (quote (spacemacs-dark-even-darker-now)))
+ '(compilation-message-face (quote default))
+ '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-normal-cursor-color "#839496")
+ '(cua-overwrite-cursor-color "#b58900")
+ '(cua-read-only-cursor-color "#859900")
  '(custom-safe-themes
    (quote
-    ("4991080f071c38346474dd568666326147d9806f2448e9187f39bfe629938e5e" "76c3ce9be3ac817677cbc90d765743c6ce8d6841109c863e674a6f83158123e3" "afc8b7b7e70b360c800360352d279dbecf1887f4c2aff50cc5f621b1e854f7f2" "a739dad48fa2f080e3e037b630e28eae755591d301c7f356ad757c3e8c019612" "241166f2cff435fd867222c691efdf19d3c1686f09d92fb1cea684aca290275f" "84956cfb1a21449a70ff29727619cb09ebc20cf13e20f1bab82e6755c7480b31" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+    ("76c3ce9be3ac817677cbc90d765743c6ce8d6841109c863e674a6f83158123e3" "afc8b7b7e70b360c800360352d279dbecf1887f4c2aff50cc5f621b1e854f7f2" "a739dad48fa2f080e3e037b630e28eae755591d301c7f356ad757c3e8c019612" "241166f2cff435fd867222c691efdf19d3c1686f09d92fb1cea684aca290275f" "84956cfb1a21449a70ff29727619cb09ebc20cf13e20f1bab82e6755c7480b31" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(evil-want-Y-yank-to-eol nil)
  '(fci-rule-character-color "#192028")
  '(fci-rule-color "#556873")
+ '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
+ '(frame-background-mode (quote dark))
+ '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
+ '(highlight-symbol-colors
+   (--map
+    (solarized-color-blend it "#002b36" 0.25)
+    (quote
+     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
+ '(highlight-symbol-foreground-color "#93a1a1")
+ '(highlight-tail-colors
+   (quote
+    (("#073642" . 0)
+     ("#546E00" . 20)
+     ("#00736F" . 30)
+     ("#00629D" . 50)
+     ("#7B6000" . 60)
+     ("#8B2C02" . 70)
+     ("#93115C" . 85)
+     ("#073642" . 100))))
+ '(hl-bg-colors
+   (quote
+    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
+ '(hl-fg-colors
+   (quote
+    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
+ '(hl-paren-colors (quote ("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900")))
  '(hl-todo-keyword-faces
    (quote
     (("TODO" . "#dc752f")
@@ -622,16 +650,29 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files (quote ("~/Projekte/agenda.org" "~/Projekte/termine.org")))
  '(package-selected-packages
    (quote
-    (lsp-ui ccls helm-ag-r lv intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme spotify helm-spotify-plus multi ranger smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md disaster company-c-headers cmake-mode clang-format xterm-color shell-pop multi-term helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
+    (irony ac-rtags company-quickhelp helm-ag-r lv intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme spotify helm-spotify-plus multi ranger smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md disaster company-c-headers cmake-mode clang-format xterm-color shell-pop multi-term helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
+ '(pos-tip-background-color "#073642")
+ '(pos-tip-foreground-color "#93a1a1")
  '(safe-local-variable-values
    (quote
-    ((helm-make-arguments . "-j12")
+    ((projectile-project-run-cmd . "./build/opencvTest")
+     (projectile-project-name . "opencvTest")
+     (projectile-project-run-cmd . "./build/openvxTest")
+     (helm-make-build-dir . "./build")
+     (helm-make-build-dir . "build")
+     (projectile-project-run-cmd . "./build/release/openvxTest")
+     (projectile-project-name . "openvxTest")
+     (helm-make-arguments . "-j12")
      (helm-make-build-dir . "build/release")
      (projectile-project-run-cmd . "./build/release/trajectoryHandler")
      (projectile-project-name . "trajectoryHandler")
      (cmake-ide-build-dir . /home/machina/Projekte/ueye/navcam/))))
+ '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(term-default-bg-color "#002b36")
+ '(term-default-fg-color "#839496")
  '(vc-annotate-background "#3c4c55")
+ '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map
    (list
     (cons 20 "#A8CE93")
@@ -652,7 +693,14 @@ This function is called at the very end of Spacemacs initialization."
     (cons 320 "#9e979f")
     (cons 340 "#556873")
     (cons 360 "#556873")))
- '(vc-annotate-very-old-color nil))
+ '(vc-annotate-very-old-color nil)
+ '(weechat-color-list
+   (quote
+    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
+ '(xterm-color-names
+   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
+ '(xterm-color-names-bright
+   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

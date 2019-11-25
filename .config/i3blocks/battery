@@ -21,7 +21,7 @@ bs="["
 be="]"
 
 if (( $percent < 13 )); then
-	notify-send ">>>>>>>>>>>>>>>>>>>>>>--- low battery ---<<<<<<<<<<<<<<<<<<<<<<"
+	[[ $charge == "\u25b2" ]] || notify-send ">>>>>>>>>>>>>>>>>>>>>>--- low battery ---<<<<<<<<<<<<<<<<<<<<<<"
 	battery="$bs$cs-------$be"
 elif (( $percent < 26 )); then
 	battery="$bs$cs$cs------$be"

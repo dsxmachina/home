@@ -106,16 +106,16 @@ workspace $ws5 gaps outer 15
 workspace $ws7 gaps inner 20
 workspace $ws7 gaps outer 15
 
-workspace 1 output primary
-workspace 2 output primary
-workspace 3 output DP-1-1 primary
-workspace 4 output DP-1-1 primary
-workspace 5 output DP-1-1 primary
-workspace 6 output primary
-workspace 7 output primary
-workspace 8 output DP-1-1 primary
-workspace 9 output primary
-workspace 10 output primary
+workspace $ws1 output primary
+workspace $ws2 output primary
+workspace $ws3 output DP-1-1 primary
+workspace $ws4 output DP-1-1 primary
+workspace $ws5 output DP-1-1 primary
+workspace $ws6 output primary
+workspace $ws7 output primary
+workspace $ws8 output DP-1-1 primary
+workspace $ws9 output primary
+workspace $ws10 output primary
 
 # --- Programme auf Custom Workspaces:
 
