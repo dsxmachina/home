@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp -*-
+;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -26,44 +26,42 @@ This function should only modify configuration layer settings."
    ;; a layer lazily. (default t)
    dotspacemacs-ask-for-lazy-installation t
 
-   ;; If non-nil layers with lazy install support are lazy installed.
    ;; List of additional paths where to look for configuration layers.
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
+   '(
      ;; ----------------------------------------------------------------
-     git
-     debug
-     ;; making everything better
-     helm
-     ranger
-     treemacs
+     ;; Example of useful layers you may want to use right away.
+     ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
+     ;; `M-m f e R' (Emacs style) to install them.
+     ;; ----------------------------------------------------------------
      ;; Programming features
-     (cmake :variables cmake-enable-cmake-ide-support t)
-     (auto-completion :variables auto-completion-enable-snippets-in-popup nil
-                      auto-completion-enable-help-tooltip t)
+     (auto-completion :variables
+                      auto-completion-enable-help-tooltip nil)
+     (lsp :variables
+          lsp-navigation 'peek
+          lsp-enable-file-watchers nil
+          lsp-ui-doc-enable nil)
+     (cmake :variables
+            cmake-enable-cmake-ide-support t)
      syntax-checking
+     git
      ;; Languages
      (c-c++ :variables
-            c-c++-default-mode-for-headers 'c++-mode
-            c-c++-enable-clang-support t
-            c-c++-backend 'rtags
-            c-c++-enable-rtags-completion t)
-     haskell
+            c-c++-adopt-subprojects t
+            c-c++-backend 'lsp-ccls)
+     org
      emacs-lisp
      markdown
-     org
      python
-     csharp
-     vimscript
-     systemd
-     ;; spacemacs-cmake-ide
+     ;; making emacs great again
+     treemacs
+     helm
+     ranger
+     multiple-cursors
      ;; allmighty shell
      (shell :variables
             shell-default-height 30
@@ -109,10 +107,10 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-enable-emacs-pdumper nil
 
-   ;; File path pointing to emacs 27.1 executable compiled with support
-   ;; for the portable dumper (this is currently the branch pdumper).
-   ;; (default "emacs-27.0.50")
-   dotspacemacs-emacs-pdumper-executable-file "emacs-27.0.50"
+   ;; Name of executable file pointing to emacs 27+. This executable must be
+   ;; in your PATH.
+   ;; (default "emacs")
+   dotspacemacs-emacs-pdumper-executable-file "emacs"
 
    ;; Name of the Spacemacs dump file. This is the file will be created by the
    ;; portable dumper in the cache directory under dumps sub-directory.
@@ -146,8 +144,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-use-spacelpa nil
 
    ;; If non-nil then verify the signature for downloaded Spacelpa archives.
-   ;; (default nil)
-   dotspacemacs-verify-spacelpa-archives nil
+   ;; (default t)
+   dotspacemacs-verify-spacelpa-archives t
 
    ;; If non-nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
@@ -167,9 +165,6 @@ It should only modify the values of Spacemacs settings."
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
-
-   ;; If non-nil output loading progress in `*Messages*' buffer. (default nil)
-   dotspacemacs-verbose-loading nil
 
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
@@ -191,6 +186,11 @@ It should only modify the values of Spacemacs settings."
    ;; True if the home buffer should respond to resize events. (default t)
    dotspacemacs-startup-buffer-responsive t
 
+   ;; Default major mode for a new empty buffer. Possible values are mode
+   ;; names such as `text-mode'; and `nil' to use Fundamental mode.
+   ;; (default `text-mode')
+   dotspacemacs-new-empty-buffer-major-mode 'text-mode
+
    ;; Default major mode of the scratch buffer (default `text-mode')
    dotspacemacs-scratch-mode 'text-mode
 
@@ -202,7 +202,8 @@ It should only modify the values of Spacemacs settings."
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(spacemacs-dark-even-darker-now
-                         spacemacs-dark)
+                         spacemacs-dark
+                         spacemacs-light)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -217,10 +218,9 @@ It should only modify the values of Spacemacs settings."
    ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
 
-   ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
-   ;; quickly tweak the mode-line size to make separators look not too crappy.
+   ;; Default font or prioritized list of fonts.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 15
+                               :size 11.0
                                :weight normal
                                :width normal)
 
@@ -331,12 +331,12 @@ It should only modify the values of Spacemacs settings."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 95
+   dotspacemacs-active-transparency 90
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-inactive-transparency 95
+   dotspacemacs-inactive-transparency 90
 
    ;; If non-nil show the titles of transient states. (default t)
    dotspacemacs-show-transient-state-title t
@@ -355,10 +355,14 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-smooth-scrolling t
 
    ;; Control line numbers activation.
-   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
-   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; If set to `t', `relative' or `visual' then line numbers are enabled in all
+   ;; `prog-mode' and `text-mode' derivatives. If set to `relative', line
+   ;; numbers are relative. If set to `visual', line numbers are also relative,
+   ;; but lines are only visual lines are counted. For example, folded lines
+   ;; will not be counted and wrapped lines are counted as multiple lines.
    ;; This variable can also be set to a property list for finer control:
    ;; '(:relative nil
+   ;;   :visual nil
    ;;   :disabled-for-modes dired-mode
    ;;                       doc-view-mode
    ;;                       markdown-mode
@@ -366,8 +370,10 @@ It should only modify the values of Spacemacs settings."
    ;;                       pdf-view-mode
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
+   ;; When used in a plist, `visual' takes precedence over `relative'.
    ;; (default nil)
    dotspacemacs-line-numbers t
+
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -377,7 +383,7 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-smartparens-strict-mode nil
 
    ;; If non-nil pressing the closing parenthesis `)' key in insert mode passes
-   ;; over any automatically added closing parenthesis, bracket, quote, etc…
+   ;; over any automatically added closing parenthesis, bracket, quote, etc...
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
    dotspacemacs-smart-closing-parenthesis nil
 
@@ -388,27 +394,47 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server t
+   dotspacemacs-enable-server nil
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
    ;; like \"~/.emacs.d/server\". It has no effect if
    ;; `dotspacemacs-enable-server' is nil.
    ;; (default nil)
-   dotspacemacs-server-socket-dir "~/.emacs.d/server"
+   dotspacemacs-server-socket-dir nil
 
    ;; If non-nil, advise quit functions to keep server open when quitting.
    ;; (default nil)
-   dotspacemacs-persistent-server t
+   dotspacemacs-persistent-server nil
 
    ;; List of search tool executable names. Spacemacs uses the first installed
-   ;; tool of the list. Supported tools are `ag', `pt', `ack' and `grep'.
-   ;; (default '("ag" "pt" "ack" "grep"))
-   dotspacemacs-search-tools '("ag" "pt" "ack" "grep")
-   ;; The default package repository used if no explicit repository has been
-   ;; specified with an installed package.
-   ;; Not used for now. (default nil)
-   dotspacemacs-default-package-repository nil
+   ;; tool of the list. Supported tools are `rg', `ag', `pt', `ack' and `grep'.
+   ;; (default '("rg" "ag" "pt" "ack" "grep"))
+   dotspacemacs-search-tools '("rg" "ag" "pt" "ack" "grep")
+
+   ;; Format specification for setting the frame title.
+   ;; %a - the `abbreviated-file-name', or `buffer-name'
+   ;; %t - `projectile-project-name'
+   ;; %I - `invocation-name'
+   ;; %S - `system-name'
+   ;; %U - contents of $USER
+   ;; %b - buffer name
+   ;; %f - visited file name
+   ;; %F - frame name
+   ;; %s - process status
+   ;; %p - percent of buffer above top of window, or Top, Bot or All
+   ;; %P - percent of buffer above bottom of window, perhaps plus Top, or Bot or All
+   ;; %m - mode name
+   ;; %n - Narrow if appropriate
+   ;; %z - mnemonics of buffer, terminal, and keyboard coding systems
+   ;; %Z - like %z, but including the end-of-line format
+   ;; (default "%I@%S")
+   dotspacemacs-frame-title-format "%I@%S"
+
+   ;; Format specification for setting the icon title format
+   ;; (default nil - same as frame-title-format)
+   dotspacemacs-icon-title-format nil
+
    ;; Delete whitespace while saving buffer. Possible values are `all'
    ;; to aggressively delete empty line and long sequences of whitespace,
    ;; `trailing' to delete only the whitespace at end of lines, `changed' to
@@ -440,10 +466,8 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
   (spacemacs/set-default-font dotspacemacs-default-font)
-  ;; (add-to-list 'custom-theme-load-path "~/.emacs.d/private/themes/")
   (setq-default git-magit-status-fullscreen t)
-  ;; (push "/usr/local/share/emacs/site-lisp/rtags" load-path)
-)
+  )
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
@@ -453,12 +477,11 @@ dump."
   )
 
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
+  "Configuration for user code:
+This function is called at the very end of Spacemacs startup, after layer
+configuration.
+Put your configuration code here, except for variables that should be set
+before packages are loaded."
   ;; Transparenz
   (spacemacs/enable-transparency)
   (add-hook 'after-make-frame-functions 'spacemacs/enable-transparency)
@@ -469,26 +492,19 @@ you should place your code here."
   (define-key global-map (kbd "M-j") 'windmove-down)
   (define-key global-map (kbd "M-k") 'windmove-up)
   (define-key global-map (kbd "M-l") 'windmove-right)
-  ;; Custom Insert-Mode Kram
-  ;; (define-key evil-insert-state-map (kbd "C-j") 'next-line)
-  ;; (define-key evil-insert-state-map (kbd "C-k") 'previous-line)
-  ;; (define-key evil-insert-state-map (kbd "C-l") 'evil-forward-char)
-  ;; (define-key evil-insert-state-map (kbd "C-h") 'evil-backward-char)
   ;; Custom Kommentar kram
   (define-key evil-normal-state-map (kbd "-") 'evilnc-comment-operator)
   (define-key evil-visual-state-map (kbd "-") 'evilnc-comment-operator)
   ;; Spaces am Ende entfernen
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   ;; go-to-definition im c++ mode über rtags
-  (define-key evil-normal-state-map (kbd "gd") 'rtags-find-symbol-at-point)
+  (define-key evil-normal-state-map (kbd "gd") 'xref-find-definitions)
   ;; Eigenes Menü mit "SPC+o"
   (spacemacs/declare-prefix "o" "own stuff")
   (spacemacs/set-leader-keys "op" 'org-pomodoro)
   (spacemacs/set-leader-keys "oc" 'cmake-ide-compile)
   (spacemacs/set-leader-keys "oC" 'cmake-ide-run-cmake)
   (spacemacs/set-leader-keys "or" 'projectile-run-project)
-  ;; (spacemacs/set-leader-keys "oc" 'cmake-ide-)
-  ;; (spacemacs/set-leader-keys "om" 'org-agenda-month-view)
   ;; Fancy-Auto-Alignment
   ;; (defun align-regexp-between (start end regexpBefore regexpAfter)
   ;;   "Repeat alignment with respect to the given regular expression."
@@ -506,7 +522,6 @@ you should place your code here."
   (setq mac-option-key-is-meta nil
         mac-option-modifier 'none)
   ;; Auto-Formatierung von C-Code
-  ;; (define-key global-map (kbd "C-f") 'clang-format-buffer)
   ;; C-Style Anpassungen
   (setq-default
    c-default-style "bsd"
@@ -528,45 +543,13 @@ you should place your code here."
                                                   projectile-root-top-down-recurring
                                                   projectile-root-bottom-up
                                                   projectile-root-local))
-  ;; (setq projectile-indexing-method 'native)
-  ;; (setq projectile-project-compilation-cmd "cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 . && make")
-  (setq projectile-project-compilation-cmd "cmake --build .")
   ;; Org-Stuff
   (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "TERMIN:" "|" "DONE" "CANCELLED")))
-  ;; (with-eval-after-load 'org-agenda
-  ;;   (require 'org-projectile)
-  ;;   (push (org-projectile:todo-files) org-agenda-files))
   (setq powerline-default-separator 'arrow)
-  ;; Zoning
-  ;; (setq zone-timer (run-with-idle-timer 120 t 'zone))
-)
+  )
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- ;; '(custom-enabled-themes (quote (spacemacs-dark-even-darker-now)))
- '(custom-safe-themes
-   (quote
-    ("76c3ce9be3ac817677cbc90d765743c6ce8d6841109c863e674a6f83158123e3" "afc8b7b7e70b360c800360352d279dbecf1887f4c2aff50cc5f621b1e854f7f2" "a739dad48fa2f080e3e037b630e28eae755591d301c7f356ad757c3e8c019612" "241166f2cff435fd867222c691efdf19d3c1686f09d92fb1cea684aca290275f" "84956cfb1a21449a70ff29727619cb09ebc20cf13e20f1bab82e6755c7480b31" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
- '(evil-want-Y-yank-to-eol nil)
- '(org-agenda-files
-   (quote
-    ("~/Projekte/agenda.org"
-     "~/Projekte/termine.org")))
- '(package-selected-packages
-   (quote
-    (helm-ag-r lv intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme spotify helm-spotify-plus multi ranger smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md disaster company-c-headers cmake-mode clang-format xterm-color shell-pop multi-term helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 (defun dotspacemacs/emacs-custom-settings ()
   "Emacs custom settings.
 This is an auto-generated function, do not modify its content directly, use
@@ -577,130 +560,28 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
- '(ansi-term-color-vector
-   [unspecified "#14191f" "#d15120" "#81af34" "#deae3e" "#7e9fc9" "#a878b5" "#7e9fc9" "#dcdddd"] t)
- '(beacon-color "#d33682")
- '(company-quickhelp-color-background "#4F4F4F")
- '(company-quickhelp-color-foreground "#DCDCCC")
- '(compilation-message-face (quote default))
- '(cua-global-mark-cursor-color "#2aa198")
- '(cua-normal-cursor-color "#839496")
- '(cua-overwrite-cursor-color "#b58900")
- '(cua-read-only-cursor-color "#859900")
- '(custom-safe-themes
-   (quote
-    ("76c3ce9be3ac817677cbc90d765743c6ce8d6841109c863e674a6f83158123e3" "afc8b7b7e70b360c800360352d279dbecf1887f4c2aff50cc5f621b1e854f7f2" "a739dad48fa2f080e3e037b630e28eae755591d301c7f356ad757c3e8c019612" "241166f2cff435fd867222c691efdf19d3c1686f09d92fb1cea684aca290275f" "84956cfb1a21449a70ff29727619cb09ebc20cf13e20f1bab82e6755c7480b31" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
- '(evil-want-Y-yank-to-eol nil)
- '(fci-rule-character-color "#192028")
- '(fci-rule-color "#556873")
- '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
- '(frame-background-mode (quote dark))
- '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
- '(highlight-symbol-colors
-   (--map
-    (solarized-color-blend it "#002b36" 0.25)
-    (quote
-     ("#b58900" "#2aa198" "#dc322f" "#6c71c4" "#859900" "#cb4b16" "#268bd2"))))
- '(highlight-symbol-foreground-color "#93a1a1")
- '(highlight-tail-colors
-   (quote
-    (("#073642" . 0)
-     ("#546E00" . 20)
-     ("#00736F" . 30)
-     ("#00629D" . 50)
-     ("#7B6000" . 60)
-     ("#8B2C02" . 70)
-     ("#93115C" . 85)
-     ("#073642" . 100))))
- '(hl-bg-colors
-   (quote
-    ("#7B6000" "#8B2C02" "#990A1B" "#93115C" "#3F4D91" "#00629D" "#00736F" "#546E00")))
- '(hl-fg-colors
-   (quote
-    ("#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36" "#002b36")))
- '(hl-paren-colors (quote ("#2aa198" "#b58900" "#268bd2" "#6c71c4" "#859900")))
- '(hl-todo-keyword-faces
-   (quote
-    (("TODO" . "#dc752f")
-     ("NEXT" . "#dc752f")
-     ("THEM" . "#2d9574")
-     ("PROG" . "#4f97d7")
-     ("OKAY" . "#4f97d7")
-     ("DONT" . "#f2241f")
-     ("FAIL" . "#f2241f")
-     ("DONE" . "#86dc2f")
-     ("NOTE" . "#b1951d")
-     ("KLUDGE" . "#b1951d")
-     ("HACK" . "#b1951d")
-     ("TEMP" . "#b1951d")
-     ("FIXME" . "#dc752f")
-     ("XXX" . "#dc752f")
-     ("XXXX" . "#dc752f"))))
- '(jdee-db-active-breakpoint-face-colors (cons "#0d0f11" "#7FC1CA"))
- '(jdee-db-requested-breakpoint-face-colors (cons "#0d0f11" "#A8CE93"))
- '(jdee-db-spec-breakpoint-face-colors (cons "#0d0f11" "#899BA6"))
- '(nrepl-message-colors
-   (quote
-    ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
- '(objed-cursor-color "#DF8C8C")
- '(org-agenda-files (quote ("~/Projekte/agenda.org" "~/Projekte/termine.org")))
  '(package-selected-packages
    (quote
-    (irony ac-rtags company-quickhelp helm-ag-r lv intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode zenburn-theme zen-and-art-theme white-sand-theme underwater-theme ujelly-theme twilight-theme twilight-bright-theme twilight-anti-bright-theme toxi-theme tao-theme tangotango-theme tango-plus-theme tango-2-theme sunny-day-theme sublime-themes subatomic256-theme subatomic-theme spacegray-theme soothe-theme solarized-theme soft-stone-theme soft-morning-theme soft-charcoal-theme smyx-theme seti-theme reverse-theme rebecca-theme railscasts-theme purple-haze-theme professional-theme planet-theme phoenix-dark-pink-theme phoenix-dark-mono-theme organic-green-theme omtose-phellack-theme oldlace-theme occidental-theme obsidian-theme noctilux-theme naquadah-theme mustang-theme monokai-theme monochrome-theme molokai-theme moe-theme minimal-theme material-theme majapahit-theme madhat2r-theme lush-theme light-soap-theme jbeans-theme jazz-theme ir-black-theme inkpot-theme heroku-theme hemisu-theme hc-zenburn-theme gruvbox-theme gruber-darker-theme grandshell-theme gotham-theme gandalf-theme flatui-theme flatland-theme farmhouse-theme exotica-theme espresso-theme dracula-theme django-theme darktooth-theme autothemer darkokai-theme darkmine-theme darkburn-theme dakrone-theme cyberpunk-theme color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized clues-theme cherry-blossom-theme busybee-theme bubbleberry-theme birds-of-paradise-plus-theme badwolf-theme apropospriate-theme anti-zenburn-theme ample-zen-theme ample-theme alect-themes afternoon-theme spotify helm-spotify-plus multi ranger smeargle orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download magit-gitflow magit-popup htmlize helm-gitignore gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link evil-magit magit transient git-commit with-editor mmm-mode markdown-toc markdown-mode gh-md disaster company-c-headers cmake-mode clang-format xterm-color shell-pop multi-term helm-company helm-c-yasnippet fuzzy flycheck-pos-tip pos-tip flycheck eshell-z eshell-prompt-extras esh-help company-statistics company auto-yasnippet yasnippet ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox spinner org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hydra hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu highlight elisp-slime-nav dumb-jump f dash s diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core popup async)))
- '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e")))
- '(pos-tip-background-color "#073642")
- '(pos-tip-foreground-color "#93a1a1")
+    (yapfify xterm-color vterm treemacs-magit smeargle shell-pop pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain multi-term mmm-mode markdown-toc magit-svn magit-gitflow magit-popup lsp-python-ms live-py-mode importmagic epc ctable concurrent htmlize helm-pydoc helm-org-rifle helm-org helm-gitignore helm-git-grep gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-org evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help cython-mode company-anaconda blacken anaconda-mode pythonic ranger helm-ctest cmake-mode cmake-ide levenshtein dap-mode bui tree-mode yasnippet-snippets lsp-ui lsp-treemacs helm-rtags helm-lsp helm-company helm-c-yasnippet google-c-style fuzzy flycheck-ycmd flycheck-rtags flycheck-pos-tip pos-tip disaster cquery cpp-auto-include company-ycmd ycmd request-deferred deferred company-statistics company-rtags rtags company-lsp company-c-headers company clang-format ccls lsp-mode markdown-mode dash-functional auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl let-alist flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize f dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async)))
  '(safe-local-variable-values
    (quote
-    ((projectile-project-run-cmd . "./build/opencvTest")
-     (projectile-project-name . "opencvTest")
+    ((helm-make-build-dir . "")
+     (projectile-project-run-cmd . "./vicon_bridge")
+     (projectile-project-name . "vicon_bridge")
+     (projectile-project-run-cmd . "./build/sandbox")
+     (projectile-project-name . "sandbox")
      (projectile-project-run-cmd . "./build/openvxTest")
-     (helm-make-build-dir . "./build")
-     (helm-make-build-dir . "build")
-     (projectile-project-run-cmd . "./build/release/openvxTest")
      (projectile-project-name . "openvxTest")
-     (helm-make-arguments . "-j12")
      (helm-make-build-dir . "build/release")
      (projectile-project-run-cmd . "./build/release/trajectoryHandler")
      (projectile-project-name . "trajectoryHandler")
-     (cmake-ide-build-dir . /home/machina/Projekte/ueye/navcam/))))
- '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
- '(term-default-bg-color "#002b36")
- '(term-default-fg-color "#839496")
- '(vc-annotate-background "#3c4c55")
- '(vc-annotate-background-mode nil)
- '(vc-annotate-color-map
-   (list
-    (cons 20 "#A8CE93")
-    (cons 40 "#b8d293")
-    (cons 60 "#c9d693")
-    (cons 80 "#DADA93")
-    (cons 100 "#e2d291")
-    (cons 120 "#eaca90")
-    (cons 140 "#F2C38F")
-    (cons 160 "#e4bea4")
-    (cons 180 "#d6b9b9")
-    (cons 200 "#c9b4cf")
-    (cons 220 "#d0a6b8")
-    (cons 240 "#d799a2")
-    (cons 260 "#DF8C8C")
-    (cons 280 "#c98f92")
-    (cons 300 "#b39399")
-    (cons 320 "#9e979f")
-    (cons 340 "#556873")
-    (cons 360 "#556873")))
- '(vc-annotate-very-old-color nil)
- '(weechat-color-list
-   (quote
-    (unspecified "#002b36" "#073642" "#990A1B" "#dc322f" "#546E00" "#859900" "#7B6000" "#b58900" "#00629D" "#268bd2" "#93115C" "#d33682" "#00736F" "#2aa198" "#839496" "#657b83")))
- '(xterm-color-names
-   ["#073642" "#dc322f" "#859900" "#b58900" "#268bd2" "#d33682" "#2aa198" "#eee8d5"])
- '(xterm-color-names-bright
-   ["#002b36" "#cb4b16" "#586e75" "#657b83" "#839496" "#6c71c4" "#93a1a1" "#fdf6e3"]))
+     (helm-make-arguments . "-j12")
+     (helm-make-build-dir . "./build")
+     (projectile-project-run-cmd . "./build/opencvTest")
+     (projectile-project-name . "opencvTest")
+     (cmake-ide-cmake-opts . "-DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -j12")
+     (cmake-ide-build-dir . "~/Projekte/c++testbed/opencvTest/build")
+     (cmake-ide-project-dir . "~/Projekte/c++testbed/opencvTest")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
