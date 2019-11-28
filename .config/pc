@@ -27,7 +27,7 @@ xkb_symbols "pc105" {
     key <LWIN> {	[ Alt_L, Meta_L		]	};
 
     key <RTSH> {	[ Shift_R		]	};
-    key <RCTL> {	[ Alt_R, Meta_R		]	};
+    key <RCTL> {	[ Super_L		]	};
     key <RWIN> {	[ Super_R		]	};
     key <MENU> {	[ Menu			]	};
 
@@ -45,7 +45,7 @@ xkb_symbols "pc105" {
 
     key <ALT>  {	[ NoSymbol, Control_L, Control_R	]	};
     key <LALT> {	[ Control_L 		]	};
-    key <RALT> {	[ Control_R			]	};
+    key <RALT> {	[ Alt_R			]	};
 
     key <META> {	[ NoSymbol, Meta_L	]	};
     modifier_map Mod1   { Alt_L, Alt_R, Meta_L, Meta_R };
