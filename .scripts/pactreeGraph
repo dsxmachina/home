@@ -1,0 +1,3 @@
+#!/bin/bash
+pactree $@ --graph | dot -Tpng > /tmp/pactreeGraph.png
+sxiv /tmp/pactreeGraph.png
