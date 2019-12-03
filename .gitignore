@@ -20,8 +20,12 @@
 !.config/pc
 !.config/de
 
+# ... list with all my packages
+!.config/pkglist.txt
+
 # ... custom scripts ...
 !.scripts
+.scripts/Data
 
 # ... mail shit ...
 !.mutt/

@@ -103,6 +103,8 @@ workspace $ws4 gaps inner 0
 workspace $ws4 gaps outer 0
 workspace $ws5 gaps inner 20
 workspace $ws5 gaps outer 15
+workspace $ws6 gaps inner 0
+workspace $ws6 gaps outer 0
 workspace $ws7 gaps inner 20
 workspace $ws7 gaps outer 15
 

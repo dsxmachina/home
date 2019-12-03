@@ -1,9 +1,9 @@
 #!/bin/bash
-
+valueFile="$HOME/.scripts/Data/gapval.dat"
 GAP=0
 
-if [ -e "$HOME/.scripts/gapval.dat" ] ; then
-    GAP=$(cat "$HOME/.scripts/gapval.dat")
+if [ -e $valueFile ] ; then
+    GAP=$(cat $valueFile)
 fi
 
 # do something in your script
@@ -18,5 +18,5 @@ else
 fi
 
 #save it output the file
-echo $GAP > "$HOME/.scripts/gapval.dat"
+echo $GAP > $valueFile
 
