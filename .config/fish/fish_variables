@@ -3,9 +3,10 @@
 SETUVAR __fish_init_2_39_8:\x1d
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
-SETUVAR _fish_abbr_gc:git\x20commit\x20\x2dm\x20
+SETUVAR _fish_abbr_gc:git\x20commit\x20\x2dm
 SETUVAR _fish_abbr_gci:vim\x20\x24HOME/\x2econfig/i3/config
 SETUVAR _fish_abbr_gcr:vim\x20\x24HOME/\x2econfig/ranger/rc\x2econf
+SETUVAR _fish_abbr_gs:git\x20status
 SETUVAR _fish_abbr_pac:sudo\x20pacman
 SETUVAR _fish_abbr_s:git\x20status
 SETUVAR fish_color_autosuggestion:5f5f5f

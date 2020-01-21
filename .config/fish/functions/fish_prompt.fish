@@ -14,7 +14,7 @@ function fish_prompt
     else
         set_color --bold green
 	#printf " \U25CF"
-	printf "-"
+	printf " "
     end
     set_color normal
     echo -n '> '
