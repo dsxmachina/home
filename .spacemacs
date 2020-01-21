@@ -485,8 +485,14 @@ before packages are loaded."
   ;; Transparenz
   (spacemacs/enable-transparency)
   (add-hook 'after-make-frame-functions 'spacemacs/enable-transparency)
-  ;; JK Als Escape-Sequenz
+  ;; JK als Escape-Sequenz
   (setq-default evil-escape-key-sequence "jk")
+  ;; Enter für newline
+  (define-key evil-normal-state-map (kbd "RET")
+    (lambda ()
+      (interactive)
+      (call-interactively 'spacemacs/evil-insert-line-below)
+      (evil-next-line)))
   ;; Custom Window Kram
   (define-key global-map (kbd "M-h") 'windmove-left)
   (define-key global-map (kbd "M-j") 'windmove-down)
