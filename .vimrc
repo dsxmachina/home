@@ -4,7 +4,6 @@ set smartcase
 set number
 set ruler
 set belloff=all
-set encoding=utf-8
 
 inoremap jk <ESC>
 set spellfile=~/.config/vim/spell/custom.utf-8.add
