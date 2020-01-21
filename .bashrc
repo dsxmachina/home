@@ -44,3 +44,5 @@ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"/usr/lib/pkgconfig"
 
 # Cuda-Path
 # export PATH=$PATH:/opt/cuda/bin
+
+exec fish
