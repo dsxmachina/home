@@ -15,6 +15,7 @@
 !.config/mpv
 !.config/ranger
 !.config/twmn
+!.config/fish
 
 # ... custom keyboard layout
 !.config/pc
