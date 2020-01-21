@@ -1,27 +1,20 @@
 # i3blocks config file for my second monitor
 command=/home/machina/.config/i3blocks/$BLOCK_NAME
 separator_block_width=15
-markup=xft
+markup=pango
 
-# Volume indicator
-#[volumeBlocks]
-#instance=Master
-#interval=once
-#signal=10
-#color=#FF5000
-
-# Battery indicator
-#
-# The battery instance defaults to 0.
-[battery]
-instance=0
-interval=30
-color=#BB9944
+## Date Time
+#[date]
+#label= 
+#command=date '+%d-%m-%Y'
+#interval=5
+#color=#E0E0E0
+##color=#AAAA55
 
 # Date Time
 [time]
-label=TIME:
-command=date '+%d-%m-%Y %H:%M'
+label= 
+command=date '+%H:%M'
 interval=5
-color=#AAAA55
-
+color=#E0E0E0
+#color=#AAAA55

@@ -2,13 +2,19 @@
 # description:	i3block network display
 # author:	machina
 
-output="$(nmcli connection show --active | tail -1)"
+output="$(nmcli connection show --active | sed -n '2p')"
 name="$(echo $output | awk '{print $1}')"
 interface="$(echo $output | awk '{print $4}')"
 vs="\u25a0"
+
+conn="$(nmcli networking connectivity)"
+
+
 if [[ "$name" == "Ethernet" ]]; then
-	printf "[\u25a1$vs$vs\u25a1]"
+	[[ "$conn" == "full" ]] && printf "<span color='#E0E0E0'> " || printf "<span color='#909090'> "
+	printf "[$vs$vs$vs$vs]"
 elif [[ "$interface" == "wlo1" ]]; then
+	[[ "$conn" == "full" ]] && printf "<span color='#E0E0E0'> " || printf "<span color='#909090'> "
 	signal=$(nmcli device wifi list ifname wlo1 | grep "*")
 	set -f;
 	set -- $signal
@@ -28,6 +34,4 @@ else
 	printf "[----]"
 fi
 
-conn="$(nmcli networking connectivity)"
-[[ "$conn" == "full" ]] && printf "[\u25cf]" || printf "[\u25bc]"
-printf "\n"
+printf "</span>\n"

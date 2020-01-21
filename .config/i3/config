@@ -5,6 +5,7 @@ set $mod Mod4
 # is used in the bar {} block below.
 #font pango:monospace 8
 font xft:source code pro 12
+#font xft:Zdyk Sagittarius  12
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 #floating_modifier $mod mouse_warping output
@@ -18,7 +19,7 @@ gaps outer 5
 smart_borders on
 
 # Startup:
-exec --no-startup-id unclutter
+exec --no-startup-id unclutter -idle 1
 exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
 exec --no-startup-id twmnd
 #exec --no-startup-id ~/.fehbg
@@ -50,9 +51,10 @@ client.background       $i3_black
 
 # Bar:
 bar {
-	output primary
+	output eDP-1
 	font xft:source code pro 14
         status_command i3blocks
+	#status_command $HOME/.config/conky/conky.wrapper
 	i3bar_command i3bar -t
 	strip_workspace_numbers yes
 	position top
@@ -67,8 +69,9 @@ bar {
 	}
 }
 bar {
-	output DP-1-1
-	font xft:source code pro 11
+	output DP-1
+	font xft:source code pro 12
+	#status_command $HOME/.config/conky/conky.wrapper
         status_command i3blocks -c ~/.config/i3blocks/config_mn2
 	i3bar_command i3bar -t
 	strip_workspace_numbers yes
@@ -83,17 +86,32 @@ bar {
 		urgent_workspace	#FF0000 	#000000DD	#FF0000		
 	}
 }
+
 # Workspace + Window Configuration
-set $ws1 "1:0xBA5E"
-set $ws2 "2:0xDA7A"
-set $ws3 "3:0xC0DE"
-set $ws4 "4:0xF4C3"
-set $ws5 "5:0xDEAD"
-set $ws6 "6:0x11FE"
-set $ws7 "7:0xBA55"
-set $ws8 "8:0x1BAD"
-set $ws9 "9:0xf00d"
-set $ws10 "10:0xC4F3"
+# Globe: 
+# Terminal: 
+# Code: 
+# Envelope: 
+#set $ws1 "1:0xBA5E"
+#set $ws2 "2:0xDA7A"
+#set $ws3 "3:0xC0DE"
+#set $ws4 "4:0xF4C3"
+#set $ws5 "5:0xDEAD"
+#set $ws6 "6:0x11FE"
+#set $ws7 "7:0xBA55"
+#set $ws8 "8:0x1BAD"
+#set $ws9 "9:0xf00d"
+#set $ws10 "10:0xC4F3"
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3:"
+set $ws4 "4:"
+set $ws5 "5:"
+set $ws6 "6:"
+set $ws7 "7:"
+set $ws8 "8:"
+set $ws9 "9:"
+set $ws10 "10:"
 
 workspace $ws1 gaps inner 0
 workspace $ws1 gaps outer 0
@@ -110,12 +128,12 @@ workspace $ws7 gaps outer 15
 
 workspace $ws1 output primary
 workspace $ws2 output primary
-workspace $ws3 output DP-1-1 primary
-workspace $ws4 output DP-1-1 primary
-workspace $ws5 output DP-1-1 primary
+workspace $ws3 output DP-1 primary
+workspace $ws4 output DP-1 primary
+workspace $ws5 output DP-1 primary
 workspace $ws6 output primary
 workspace $ws7 output primary
-workspace $ws8 output DP-1-1 primary
+workspace $ws8 output DP-1 primary
 workspace $ws9 output primary
 workspace $ws10 output primary
 
@@ -178,19 +196,19 @@ for_window [instance="dropdown_terminal"] resize set 960 250
 for_window [instance="dropdown_terminal"] border pixel 2
 for_window [instance="dropdown_terminal"] move position center
 
-for_window [instance="conky"] floating enable
-for_window [instance="conky"] move scratchpad
-for_window [instance="conky"] sticky enable
-for_window [instance="conky"] scratchpad show
-#for_window [instance="conky"] resize set 960 450
-for_window [instance="conky"] move position 1500 -10
-for_window [instance="conky"] border pixel 0
+#for_window [instance="conky"] floating enable
+#for_window [instance="conky"] move scratchpad
+#for_window [instance="conky"] sticky enable
+#for_window [instance="conky"] scratchpad show
+##for_window [instance="conky"] resize set 960 450
+#for_window [instance="conky"] move position 1500 -10
+#for_window [instance="conky"] border pixel 0
 
-bindsym $mod+c [instance="conky"] scratchpad show 
+#bindsym $mod+c [instance="conky"] scratchpad show 
 bindsym $mod+x [instance="dropdown_terminal"] scratchpad show 
 
 for_window [instance="dropdown_*"] scratchpad show
-for_window [instance="conky"] scratchpad show 
+#for_window [instance="conky"] scratchpad show 
 
 
 # --- Keybindings:

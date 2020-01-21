@@ -26,43 +26,52 @@
 # Each block command defaults to the script name to avoid boilerplate.
 command=/home/machina/.config/i3blocks/$BLOCK_NAME
 separator_block_width=15
-markup=xft
+markup=pango
 
 # little trick: i3blocks for repeated excecution
 [randomBackground]
 interval=1800
 
 # Volume indicator
-[volumeBlocks]
+[volumeBlocksSmall]
 instance=Master
 interval=60
 signal=10
-color=#FF5000
+#color=#FF5000
 
 # Memory usage
 # The type defaults to "mem" if the instance is not specified.
 [memory]
-label=MEMORY:
+label= 
 interval=30
-color=#FF5500
+color=#E0E0E0
+#color=#FF5500
 
 # Network interface monitoring
 [network]
 interval=30
-color=#DD7722
+#color=#DD7722
 
 # Battery indicator
 #
 # The battery instance defaults to 0.
-[battery]
+[battery_icon]
 instance=0
 interval=30
-color=#BB9944
+#color=#BB9944
+
+# Date Time
+[date]
+label= 
+command=date '+%d-%m-%Y'
+interval=5
+color=#E0E0E0
+#color=#AAAA55
 
 # Date Time
 [time]
-label=TIME:
-command=date '+%d-%m-%Y %H:%M'
+label= 
+command=date '+%H:%M'
 interval=5
-color=#AAAA55
-
+color=#E0E0E0
+#color=#AAAA55

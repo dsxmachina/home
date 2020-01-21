@@ -1,5 +1,5 @@
 #!/bin/bash
-prime="eDP-1-1"
+prime="eDP-1"
 # First - Laptop screen is set:
 xrandr --output $prime --mode 1920x1080 --dpi 96 --primary
 

@@ -40,3 +40,4 @@ else
 fi
 
 echo -e "$battery[$charge]"
+echo -e "&#xf240"

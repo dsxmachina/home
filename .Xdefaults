@@ -36,7 +36,7 @@ background:		#000000
 
 !! Appearance:
 URxvt.foreground: 	#FF8000
-URxvt.background: 	[80]#000000
+URxvt.background: 	[85]#000000
 URxvt.depth: 		32
 URxvt.font: 		xft:source code pro:size=13
 URxvt.scrollBar: 	false
@@ -50,9 +50,11 @@ URxvt.keysym.M-u: 		perl:url-select:select_next
 URxvt.url-select.launcher:	/usr/bin/xdg-open
 URxvt.url-select.underline:	true
 !! keyboard-select:
-URxvt.keysym.M-v:		perl:keyboard-select:activate !!!! resize-font:
-URxvt*resize-font*smaller:	M-plus
-URxvt.resize-font.bigger:	M-down
+URxvt.keysym.C-v:		perl:keyboard-select:activate !!!! resize-font:
+URxvt.keysym.C-plus: 		resize-font:bigger
+Urxvt.keysym.C-minus: 		resize-font:smaller
+Urxvt.keysym.C-0:		resize-font:reset
+Urxvt.keysym.C-question:	resize-font:show
 !! matcher
 URxvt.url-launcher:		/usr/bin/xdg-open
 URxvt.matcher.button:		1
