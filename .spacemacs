@@ -56,12 +56,12 @@ This function should only modify configuration layer settings."
      org
      emacs-lisp
      markdown
-     python
+     (python :variables
+             python-backend 'anaconda)
      ;; making emacs great again
      treemacs
      helm
      ranger
-     dap
      ;; allmighty shell
      (shell :variables
             shell-default-height 30
