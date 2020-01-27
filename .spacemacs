@@ -491,7 +491,7 @@ before packages are loaded."
   (define-key evil-normal-state-map (kbd "RET")
     (lambda ()
       (interactive)
-      (call-interactively 'spacemacs/evil-insert-line-below)
+      (call-interactively 'spacemacs/evil-insert-line-above)
       (evil-next-line)))
   ;; Custom Window Kram
   (define-key global-map (kbd "M-h") 'windmove-left)
