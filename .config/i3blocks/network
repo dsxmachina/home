@@ -18,7 +18,7 @@ elif [[ "$interface" == "wlo1" ]]; then
 	signal=$(nmcli device wifi list ifname wlo1 | grep "*")
 	set -f;
 	set -- $signal
-	bars="${8//[_]/}"
+	bars="${9//[_]/}"
 	rep="${#bars}"
 	printf "["
 	if [[ $rep == "0" ]] ; then
