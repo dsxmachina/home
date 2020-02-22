@@ -1,6 +1,6 @@
 # Ignore everything but...
 /*
-
+*
 # ... gitignore ...
 !.gitignore
 !spacemacs-stuff
@@ -12,10 +12,11 @@
 !.config/firefox
 !.config/i3
 !.config/i3blocks
-!.config/mpv
+*!.config/mpv
 !.config/ranger
 !.config/twmn
 !.config/fish
+!.config/fish/functions
 
 # ... custom keyboard layout
 !.config/pc

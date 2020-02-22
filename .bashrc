@@ -5,7 +5,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-
 function ranger-cd {
     # create a temp file and store the name
     tempfile="$(mktemp -t tmp.XXXXXX)"
@@ -45,4 +44,4 @@ export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"/usr/lib/pkgconfig"
 # Cuda-Path
 # export PATH=$PATH:/opt/cuda/bin
 
-exec fish
+[[ "$(tty)" = "/dev/tty1" ]] || exec fish
