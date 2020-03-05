@@ -23,7 +23,7 @@ exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
 exec --no-startup-id dunst
 exec --no-startup-id "$HOME/.config/i3blocks/randomBackground"
 #exec --no-startup-id conky
-exec --no-startup-id firefox
+#exec --no-startup-id firefox
 exec --no-startup-id urxvt -name dropdown_terminal
 #-- 
 
@@ -167,7 +167,6 @@ for_window [instance="conky"] scratchpad show
 for_window [instance="conky"] move position 1500 -10
 for_window [instance="conky"] border pixel 0
 
-bindsym $mod+c [instance="conky"] scratchpad show 
 bindsym $mod+x [instance="dropdown_terminal"] scratchpad show 
 
 for_window [instance="dropdown_*"] scratchpad show
@@ -197,6 +196,9 @@ bindsym $mod+Shift+w exec --no-startup-id firefox -private-window
 # Add to watchlist:
 bindsym $mod+a exec --no-startup-id addURL
 bindsym $mod+Shift+a exec --no-startup-id addURL once
+# Movie
+bindsym $mod+m exec --no-startup-id randomMovie
+bindsym $mod+Shift+m exec --no-startup-id addMovie
 # Play from watchlist:
 bindsym $mod+y exec videoSession
 # Gap-Keybindings:

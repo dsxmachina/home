@@ -3,4 +3,4 @@
 # author:	machina
 folder="$HOME/Bilder/wallpapers/"
 file="$(ls $folder | shuf -n 1)"
-feh --no-fehbg --bg-scale "$folder$file"
+feh --no-fehbg --bg-fill "$folder$file"
