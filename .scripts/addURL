@@ -4,8 +4,7 @@
 # otherwise use dmenu to add tags
 # Call with 'once', to mark non-persistent Videos
 # tags 'music' and 'persistent' will not be deleted after watching
-clip=$(xclip -o)
-# youtube only
+clip=$(xclip -o) # youtube only
 if [[ ! $clip =~ .*www.youtube.com.* ]]; then
 	notify-send "No YouTube-link in clipboard"
 	exit 1

@@ -3,3 +3,4 @@ xset r rate 200 25
 xset -dpms
 xset s off
 exec i3
+exec firefox
