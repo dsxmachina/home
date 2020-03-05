@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+file="$HOME/.scripts/files/movielist"
+movie=$(cat $file | dmenu)
+
+if grep -Fxq "$movie" "$file"; then
+	notify-send "already in list"
+else
+	if [[ "$movie" != "" ]]; then
+		echo -e "$movie" >> $file
+		notify-send "added $movie to movielist"
+	fi
+fi

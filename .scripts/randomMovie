@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+movie=$(cat $HOME/.scripts/files/movielist | shuf -n 1)
+notify-send "$movie"
