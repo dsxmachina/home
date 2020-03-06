@@ -17,3 +17,4 @@ C-c C-e 		Starte ag-edit session
 
 #- Weird Menus and Stuff
 C-c ! v                 Flycheck verify setup
+-> moved to SPC e v
