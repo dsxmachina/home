@@ -112,6 +112,8 @@ set $ws7 "7:"
 set $ws8 "8:"
 set $ws9 "9:"
 set $ws10 "10:"
+set $ws_distraction_free1 "98: "
+set $ws_distraction_free2 "99: "
 
 workspace $ws1 gaps inner 0
 workspace $ws1 gaps outer 0
@@ -126,6 +128,7 @@ workspace $ws6 gaps outer 0
 workspace $ws7 gaps inner 20
 workspace $ws7 gaps outer 15
 
+
 workspace $ws1 output primary
 workspace $ws2 output primary
 workspace $ws3 output DP-1 primary
@@ -136,6 +139,8 @@ workspace $ws7 output primary
 workspace $ws8 output DP-1 primary
 workspace $ws9 output primary
 workspace $ws10 output primary
+workspace $ws_distraction_free1 output primary
+workspace $ws_distraction_free2 output DP-1 primary
 
 # --- Programme auf Custom Workspaces:
 
@@ -216,7 +221,7 @@ for_window [instance="dropdown_*"] scratchpad show
 bindsym $mod+q kill
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu -i -l 10'
 # Volume 
 bindsym XF86AudioRaiseVolume exec changeVolume +5
 bindsym XF86AudioLowerVolume exec changeVolume -5
@@ -287,6 +292,10 @@ bindsym $mod+t split toggle
 bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout tabbed
 bindsym $mod+e layout toggle split
+# quiet mode <- TODO: integrate into emacs
+bindsym $mod+Shift+f exec i3zen
+#bindsym $mod+Shift+q mode "quiet"
+exec_always $HOME/.config/i3/quiet-toggle-bar.py --kill
 # Floating stuff
 bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
