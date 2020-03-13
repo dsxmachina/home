@@ -58,7 +58,6 @@ bar {
 	i3bar_command i3bar -t
 	strip_workspace_numbers yes
 	position top
-	mode dock
 	modifier None
 	tray_output none
 	colors {
@@ -76,7 +75,6 @@ bar {
 	i3bar_command i3bar -t
 	strip_workspace_numbers yes
 	position top
-	mode dock
 	modifier None
 	tray_output none
 	colors {
@@ -112,8 +110,22 @@ set $ws7 "7:"
 set $ws8 "8:"
 set $ws9 "9:"
 set $ws10 "10:"
-set $ws_distraction_free1 "98: "
-set $ws_distraction_free2 "99: "
+set $zen1 "98: "
+set $zen2 "99: "
+
+
+workspace $ws1 output primary
+workspace $ws2 output primary
+workspace $ws3 output DP-1 primary
+workspace $ws4 output DP-1 primary
+workspace $ws5 output DP-1 primary
+workspace $ws6 output primary
+workspace $ws7 output primary
+workspace $ws8 output DP-1 primary
+workspace $ws9 output primary
+workspace $ws10 output primary
+workspace $zen1 output primary
+workspace $zen2 output DP-1 primary
 
 workspace $ws1 gaps inner 0
 workspace $ws1 gaps outer 0
@@ -128,19 +140,10 @@ workspace $ws6 gaps outer 0
 workspace $ws7 gaps inner 20
 workspace $ws7 gaps outer 15
 
-
-workspace $ws1 output primary
-workspace $ws2 output primary
-workspace $ws3 output DP-1 primary
-workspace $ws4 output DP-1 primary
-workspace $ws5 output DP-1 primary
-workspace $ws6 output primary
-workspace $ws7 output primary
-workspace $ws8 output DP-1 primary
-workspace $ws9 output primary
-workspace $ws10 output primary
-workspace $ws_distraction_free1 output primary
-workspace $ws_distraction_free2 output DP-1 primary
+workspace $zen1 gaps inner 20
+workspace $zen1 gaps outer 20
+workspace $zen2 gaps inner 30
+workspace $zen2 gaps outer 20
 
 # --- Programme auf Custom Workspaces:
 
@@ -278,6 +281,18 @@ mode "resize" {
 	bindsym r mode "default"
 	bindsym $mod+r mode "default"
 }
+# Gaps
+bindsym $mod+Shift+g mode "gaps"
+mode "gaps" {
+	bindsym h gaps outer current minus 10
+	bindsym j gaps inner current plus 10
+	bindsym k gaps inner current minus 10
+	bindsym l gaps outer current plus 10
+	bindsym g mode "default"
+	bindsym q mode "default"
+	bindsym Escape mode "default"
+	bindsym 0 gaps inner current set 10; gaps outer current set 5
+}
 # move focused window
 bindsym $mod+Shift+h move left  30px
 bindsym $mod+Shift+j move down  30px
@@ -293,7 +308,19 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout tabbed
 bindsym $mod+e layout toggle split
 # quiet mode <- TODO: integrate into emacs
-bindsym $mod+Shift+f exec i3zen
+bindsym $mod+Shift+f bar mode toggle
+bindsym $mod+0x3c bar mode toggle; mode "zen"; exec i3zen 
+mode "zen" {
+	bindsym Control+j    workspace $zen1
+	bindsym Control+0xf6 workspace $zen2
+	bindsym Control+m workspace    $ws7
+	bindsym Control+Shift+j    move container to workspace $zen1
+	bindsym Control+Shift+0xf6 move container to workspace $zen2
+ 	bindsym Control+Tab workspace back_and_forth
+
+	bindsym $mod+0x3c exec i3unzen; bar mode toggle; mode "default"
+ 	bindsym Escape mode "default
+}
 #bindsym $mod+Shift+q mode "quiet"
 exec_always $HOME/.config/i3/quiet-toggle-bar.py --kill
 # Floating stuff
