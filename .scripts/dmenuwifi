@@ -1,5 +1,5 @@
 #!/bin/bash
-name="$(nmcli device wifi list | dmenu -i -l 8 | awk -F' Infra' '{print $1}' | sed -e 's/^[ *\t]*//;s/[ *\t]*$//')"
+name="$(nmcli device wifi list | dmenu -i -l 8 | awk -F' Infra' '{print $1}' | sed -e 's/^[ *\t]*//;s/[ *\t]*$//' | awk '{print $2}')"
 
 [[ -z "$name" ]] && exit
 [[ $name =~ ^IN-USE ]] && exit
