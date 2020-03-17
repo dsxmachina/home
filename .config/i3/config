@@ -13,41 +13,33 @@ popup_during_fullscreen smart
 
 # Appearance:
 for_window [class="^.*"] border pixel 2
-gaps inner 0
-gaps outer 0
+gaps inner 20
+gaps outer 10
 smart_borders on
 
 # Startup:
 exec --no-startup-id unclutter
 exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
 exec --no-startup-id dunst
-exec --no-startup-id "$HOME/.config/i3blocks/randomBackground"
+exec --no-startup-id wal -R 
+exec --no-startup-id firefox
+#exec --no-startup-id "$HOME/.config/i3blocks/randomBackground"
 #exec --no-startup-id conky
-#exec --no-startup-id firefox
 exec --no-startup-id urxvt -name dropdown_terminal
 #-- 
 
-# Farben:
-set $i3_orange1		#FF2000
-set $i3_orange2		#620000
-set $i3_orange3		#FF2308
-set $i3_grey1		#333333BB
-set $i3_grey2		#222222BB
-set $i3_grey1lt		#333333DD
-set $i3_grey2lt		#222222DD
-set $i3_white		#FFFFFFBB
-set $i3_black		#000000BB
-set $i3_lightgrey	#7D7D7DBB
+set_from_resource $fg i3wm.color7 #f0f0f0
+set_from_resource $bg i3wm.color2 #f0f0f0
+set_from_resource $c3 i3wm.color3 #f0f0f0
 
-#class                 	border  	bground 	text    	indicator 	child_border
-client.focused          #FF0000 	$i3_grey2lt 	$i3_orange3 	$i3_orange3    	#FF0000
-client.focused_inactive $i3_grey1	#5F676A 	$i3_white 	#484E50   	#5F676A
-client.unfocused        $i3_grey1 	$i3_grey2	#888888 	#292D2E   	#222222
-client.urgent           #FF0000 	#000000DD 	#FF0000 	#FF0000   	#000000
-client.placeholder      #000000 	#0C0C0C 	#FFFFFF 	#000000   	#0C0C0C
+# class                 border  backgr. text indicator child_border
+client.focused          $bg     $bg     $fg  $c3       $bg
+client.focused_inactive $bg     $bg     $fg  $c3       $bg
+client.unfocused        $bg     $bg     $fg  $c3       $bg
+client.urgent           $bg     $bg     $fg  $c3       $bg
+client.placeholder      $bg     $bg     $fg  $c3       $bg
 
-client.background       $i3_black
-
+client.background       $bg
 # Bar:
 #bar {
 #	font xft:source code pro 20
@@ -82,12 +74,6 @@ workspace $ws1 gaps inner 0
 workspace $ws1 gaps outer 0
 workspace $ws3 gaps inner 0
 workspace $ws3 gaps outer 0
-workspace $ws4 gaps inner 0
-workspace $ws4 gaps outer 0
-workspace $ws5 gaps inner 0
-workspace $ws5 gaps outer 0
-workspace $ws7 gaps inner 0
-workspace $ws7 gaps outer 0
 
 workspace 1 output primary
 workspace 2 output primary
@@ -179,7 +165,8 @@ bindsym 0x1008ff26 exec showTime
 bindsym $mod+q kill
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec dmenu_run -nb "$fg" -nf "$bg" -sb "$bg" -sf "$fg"
 # Volume 
 bindsym XF86AudioRaiseVolume exec changeVolume +5
 bindsym XF86AudioLowerVolume exec changeVolume -5
@@ -242,6 +229,13 @@ mode "resize" {
 	bindsym r mode "default"
 	bindsym $mod+r mode "default"
 }
+mode "zen" {
+	bindsym Control+m workspace $ws1
+	bindsym Control+n workspace $ws2
+	bindsym j mode "default"
+}
+bindsym $mod+z mode "zen"
+
 # move focused window
 bindsym $mod+Shift+h move left  30px
 bindsym $mod+Shift+j move down  30px
