@@ -166,6 +166,10 @@ for_window [class="cv_*"] floating enable
 for_window [title="cv_*"] floating enable
 for_window [class="cv_*"] move position 0 0
 for_window [title="cv_*"] move position 0 0
+for_window [class="mid_*"] floating enable
+for_window [title="mid_*"] floating enable
+for_window [class="mid_*"] move position center
+for_window [title="mid_*"] move position center
 
 # Python Figures immer floating
 for_window [class="^Figure"] floating enable
