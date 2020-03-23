@@ -1,0 +1,20 @@
+cmake_minimum_required (VERSION 3.9.4)
+
+project (xPROJECTNAMEx LANGUAGES CXX)
+
+add_executable(xPROJECTNAMEx 
+	xPROJECTNAMEx.cpp 
+	main.cpp
+)
+
+find_package(OPENCV opencv REQUIRED)
+
+include_directories(
+	include
+	${OPENCV_INCLUDE_DIRS} 
+	/usr/include
+)
+
+target_link_libraries( xPROJECTNAMEx
+	${OPENCV_LIBRARIES}
+)

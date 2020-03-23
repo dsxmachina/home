@@ -8,39 +8,25 @@ subDirs="$(ls -l $projectDir | awk '/^d/ {print $9}' | dmenu -p 'Select subfolde
 [[ "$subDirs" == "" ]] && exit
 [[ -d "$projectDir/$subDirs" ]] || mkdir "$projectDir/$subDirs"
 newDir="$projectDir/$subDirs/$projName"
-nlibs="$(seq 0 9 | dmenu -p 'How many libs to add? (0 default): ')"
-[[ "$nlibs" == "" ]] && exit
+
+#nlibs="$(seq 0 9 | dmenu -p 'How many libs to add? (0 default): ')"
+#[[ "$nlibs" == "" ]] && exit
+template_file="$(ls $HOME/.scripts/Data/ | grep CML_ | dmenu -p 'Choose template: ')"
+[[ "$template_file" == "" ]] && exit
 
 # Create folders
 mkdir $newDir
+mkdir $newDir/include
 mkdir $newDir/build
 mkdir $newDir/build/release
 mkdir $newDir/build/debug
 
-
 # Fill CMakeLists.txt with stuff from template
-cmake_template=$(<$HOME/.scripts/Data/CMakeLists.txt_template)
-echo -e "${cmake_template//xPROJECTNAMEx/$projName}" > "$newDir/CMakeLists.txt"
+cat $HOME/.scripts/Data/$template_file | sed s/xPROJECTNAMEx/$projName/g > "$newDir/CMakeLists.txt"
+cat $HOME/.scripts/Data/dir-locals-template.txt | sed s/xPROJECTNAMEx/$projName/g | sed s/xPROJECTFOLDERx/$subDirs/g > "$newDir/.dir-locals.el"
 
-if [[ "$nlibs" == "0" ]]; then
-	libs=""
-else
-	libs=""
-	for i in $(seq 1 $nlibs)
-	do
-		libs+=" $(ls -p /usr/lib | grep -v / | grep .so | dmenu -i -l 10)"
-	done
-fi
+# Generate empty files
+touch $newDir/main.cpp
+touch $newDir/$projName.cpp
+touch $newDir/include/$projName.h
 
-echo -e "target_link_libraries($projName \${CUDA_LIB} \${CUDA_RT_LIB} \${OPENCV_LIBRARIES} \${LIBCONFIG_PLUSPLUS_LIBRARIES}$libs)" >> "$newDir/CMakeLists.txt"
-
-echo -e "#include <iostream>"  		  > "$newDir/main.cpp"
-echo -e "#include <string>" 		   >> "$newDir/main.cpp"
-echo -e "#include \"$projName.h\"" >> "$newDir/main.cpp"
-echo -e "#include <iostream>" 		  > "$newDir/$projName.h"
-echo -e "#include <string>" 	  	 >> "$newDir/$projName.h"
-echo -e "#include \"$projName.h\""  > "$newDir/$projName.cpp"
-
-# Old lines:
-#echo -e "cmake_minimum_required (VERSION 2.8)\n\nproject ($projName)\n\nfind_package(OpenCV REQUIRED)\n\ninclude_directories(\${OpenCV_INCLUDE_DIRS} /usr/include)\n\nadd_executable($projName $projName.cpp main.cpp)\n" > "$newDir/CMakeLists.txt"
-#echo -e "target_link_libraries($projName \${OpenCV_LIBS}$libs)" >> "$newDir/CMakeLists.txt"
