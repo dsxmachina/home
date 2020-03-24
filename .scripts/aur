@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+link="$@"
+[[ -z $link ]] && echo "I need a link to do stuff..." && exit 1
+[[ ! $link =~ 'aur.archlinux.org' ]] && echo "That's no valid link!" && exit 1
+
+
+folder="$(echo $link | awk '{n=split($1, A, "/"); print A[n]}' | awk -F '.' '{print $1}')"
+
+# clone into software folder
+cd $HOME/Software
+[[ -d $folder ]] && echo "That's already there." && exit 0
+git clone $link
+cd $folder
+makepkg -s -i
