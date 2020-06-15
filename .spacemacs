@@ -43,23 +43,28 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-help-tooltip nil)
      (lsp :variables
           lsp-navigation 'peek
-          lsp-enable-file-watchers nil
+          lsp-print-performance t
+          lsp-enable-file-watchers t
           lsp-ui-doc-enable nil
           lsp-enable-indentation nil
           lsp-enable-on-type-formatting nil)
      (cmake :variables
             cmake-enable-cmake-ide-support t)
      syntax-checking
+     debug
      git
      ;; Languages
      (c-c++ :variables
             c-c++-adopt-subprojects t
             c-c++-backend 'lsp-ccls)
+     (rust :variables
+           rust-backend 'racer)
      org
      emacs-lisp
      markdown
      (python :variables
              python-backend 'lsp)
+     nixos
      ;; making emacs great again
      treemacs
      helm
@@ -167,6 +172,11 @@ It should only modify the values of Spacemacs settings."
    ;; section of the documentation for details on available variables.
    ;; (default 'vim)
    dotspacemacs-editing-style 'vim
+
+   ;; If non-nil show the version string in the Spacemacs buffer. It will
+   ;; appear as (spacemacs version)@(emacs version)
+   ;; (default t)
+   dotspacemacs-startup-buffer-show-version t
 
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
@@ -444,6 +454,13 @@ It should only modify the values of Spacemacs settings."
    ;; (default nil)
    dotspacemacs-whitespace-cleanup nil
 
+   ;; If non nil activate `clean-aindent-mode' which tries to correct
+   ;; virtual indentation of simple modes. This can interfer with mode specific
+   ;; indent handling like has been reported for `go-mode'.
+   ;; If it does deactivate it here.
+   ;; (default t)
+   dotspacemacs-use-clean-aindent-mode t
+
    ;; Either nil or a number of seconds. If non-nil zone out after the specified
    ;; number of seconds. (default nil)
    dotspacemacs-zone-out-when-idle nil
@@ -570,12 +587,59 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (typit mmt sudoku pacmacs 2048-game yapfify xterm-color vterm treemacs-magit smeargle shell-pop pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain multi-term mmm-mode markdown-toc magit-svn magit-gitflow magit-popup lsp-python-ms live-py-mode importmagic epc ctable concurrent htmlize helm-pydoc helm-org-rifle helm-org helm-gitignore helm-git-grep gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-org evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help cython-mode company-anaconda blacken anaconda-mode pythonic ranger helm-ctest cmake-mode cmake-ide levenshtein dap-mode bui tree-mode yasnippet-snippets lsp-ui lsp-treemacs helm-rtags helm-lsp helm-company helm-c-yasnippet google-c-style fuzzy flycheck-ycmd flycheck-rtags flycheck-pos-tip pos-tip disaster cquery cpp-auto-include company-ycmd ycmd request-deferred deferred company-statistics company-rtags rtags company-lsp company-c-headers company clang-format ccls lsp-mode markdown-mode dash-functional auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl let-alist flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize f dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async)))
+    (nix-mode helm-nixos-options company-nixos-options nixos-options company-racer ac-racer toml-mode racer flycheck-rust cargo rust-mode realgud test-simple loc-changes load-relative typit mmt sudoku pacmacs 2048-game yapfify xterm-color vterm treemacs-magit smeargle shell-pop pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain multi-term mmm-mode markdown-toc magit-svn magit-gitflow magit-popup lsp-python-ms live-py-mode importmagic epc ctable concurrent htmlize helm-pydoc helm-org-rifle helm-org helm-gitignore helm-git-grep gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-org evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help cython-mode company-anaconda blacken anaconda-mode pythonic ranger helm-ctest cmake-mode cmake-ide levenshtein dap-mode bui tree-mode yasnippet-snippets lsp-ui lsp-treemacs helm-rtags helm-lsp helm-company helm-c-yasnippet google-c-style fuzzy flycheck-ycmd flycheck-rtags flycheck-pos-tip pos-tip disaster cquery cpp-auto-include company-ycmd ycmd request-deferred deferred company-statistics company-rtags rtags company-lsp company-c-headers company clang-format ccls lsp-mode markdown-mode dash-functional auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl let-alist flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize f dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async)))
+ '(pdf-view-midnight-colors (quote ("#655370" . "#fbf8ef")))
  '(safe-local-variable-values
    (quote
-    ((projectile-project-run-cmd . "./build/release/ueyecam")
+    ((projectile-project-run-cmd . "./build/release/cvCuda_test")
+     (projectile-project-name . "cvCuda_test")
+     (projectile-project-run-cmd . "./build/release/nix_test")
+     (projectile-project-name . "nix_test")
+     (cmake-ide-build-dir . "~/Projekte/ueye/navcam/build/release")
+     (cmake-ide-project-dir . "~/Projekte/ueye/navcam")
+     (projectile-compilation-dir . "~/Projekte/loadrunner/bodensensor")
+     (projectile-project-root . "~/Projekte/loadrunner/bodensensor")
+     (projectile-project-run-cmd . "build/release/bodensensor")
+     (helm-make-build-dir . "build")
+     (projectile-project-run-cmd . "./build/bodensensor")
+     (cmake-ide-cmake-opts . "-DCMAKE_BUILD_TYPE=Release
+ -DLIBSERIAL_ENABLE_TESTING=OFF
+ -DLIBSERIAL_BUILD_EXAMPLES=OFF
+ -DLIBSERIAL_PYTHON_ENABLE=OFF
+ -DLIBSERIAL_BUILD_DOCS=OFF
+ -DINSTALL_SHARED=OFF
+ -DMQTT_BUILD_EXAMPLES=OFF
+ -DMQTT_BUILD_TESTS=OFF
+ -DJSON_BuildTests=OFF
+ -Dnanopb_BUILD_GENERATOR=OFF
+ -DCMAKE_BUILD_TYPE=$btype
+ -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -j12")
+     (cmake-ide-build-dir . "build/release")
+     (cmake-ide-project-dir . "~/Projekte/loadrunner/loadrunner-nano-bridge/localization-bridge")
+     (projectile-project-run-cmd . "./build/release/bodensensor")
+     (projectile-project-name . "bodensensor")
+     (cmake-ide-build-dir . "~/Projekte/loadrunner/bodensensor/build/release")
+     (cmake-ide-project-dir . "~/Projekte/loadrunner/bodensensor")
+     (helm-make-arguments . "-j12 -03 -Wall")
+     (projectile-project-run-cmd . "./build/release/test")
+     (projectile-project-name . "test")
+     (cmake-ide-cmake-opts . "-DCMAKE_BUILD_TYPE=Release -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -j12 -03 -Wall")
+     (cmake-ide-build-dir . "~/Projekte/c++testbed/test/build/release")
+     (cmake-ide-project-dir . "~/Projekte/c++testbed/test")
+     (cmake-ide-build-dir . "~/Projekte/c++testbed/sandbox/build")
+     (cmake-ide-project-dir . "~/Projekte/c++testbed/sandbox")
+     (cmake-ide-build-dir . "~/Projekte/c++testbed/openvxTest/build")
+     (cmake-ide-project-dir . "~/Projekte/c++testbed/openvxTest")
+     (cmake-ide-build-dir . "~/Projekte/c++testbed/mqttClient/build/release")
+     (cmake-ide-project-dir . "~/Projekte/c++testbed/mqttClient")
+     (cmake-ide-build-dir . "~/Projekte/c++testbed/doublebuffer/build/release")
+     (cmake-ide-project-dir . "~/Projekte/c++testbed/doublebuffer")
+     (projectile-project-run-cmd . "./build/release/doublebuffer")
+     (projectile-project-name . "doublebuffer")
+     (projectile-project-run-cmd . "./build/release/ueyecam")
      (projectile-project-name . "ueyecam")
      (projectile-project-run-cmd . "./build/release/mqttClient")
      (projectile-project-name . "mqttClient")

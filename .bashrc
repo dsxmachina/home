@@ -4,6 +4,11 @@
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+if [[ -z "$PS1" ]]; then return; fi
+if [[ -n $IN_NIX_SHELL ]]; then return; fi
+if [ -e /home/machina/.nix-profile/etc/profile.d/nix.sh ]; then 
+	. ~/.nix-profile/etc/profile.d/nix.sh
+fi # added by Nix installer
 
 function ranger-cd {
     # create a temp file and store the name
@@ -40,8 +45,10 @@ RVG_LIBRARY_PATH=$LIBRARY_PATH
 RVG_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 
 export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:"/usr/lib/pkgconfig"
+export LD_LIBRARY_PATH=$(nixGLNvidia printenv LD_LIBRARY_PATH):$LD_LIBRARY_PATH
 
 # Cuda-Path
 # export PATH=$PATH:/opt/cuda/bin
 
-[[ "$(tty)" = "/dev/tty1" ]] || exec fish
+#[[ "$(tty)" = "/dev/tty1" ]] || exec fish
+export PATH=/bin/lscript:/bin/lscript:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/cuda-10.0/bin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/machina/.scripts:$PATH
