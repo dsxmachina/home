@@ -110,8 +110,6 @@ set $ws7 "7:"
 set $ws8 "8:"
 set $ws9 "9:"
 set $ws10 "10:"
-set $zen1 "98: "
-set $zen2 "99: "
 
 
 workspace $ws1 output primary
@@ -124,8 +122,6 @@ workspace $ws7 output primary
 workspace $ws8 output DP-1 primary
 workspace $ws9 output primary
 workspace $ws10 output primary
-workspace $zen1 output primary
-workspace $zen2 output DP-1 primary
 
 workspace $ws1 gaps inner 0
 workspace $ws1 gaps outer 0
@@ -139,11 +135,6 @@ workspace $ws6 gaps inner 0
 workspace $ws6 gaps outer 0
 workspace $ws7 gaps inner 20
 workspace $ws7 gaps outer 15
-
-workspace $zen1 gaps inner 20
-workspace $zen1 gaps outer 20
-workspace $zen2 gaps inner 30
-workspace $zen2 gaps outer 20
 
 # --- Programme auf Custom Workspaces:
 
@@ -159,38 +150,30 @@ assign [title="^vis"]      	$ws7
 
 # Emacs und Telegram auf eigenem Workspace
 assign [title="^Telegram$"] 	$ws6
+assign [title="^teams$"] 	$ws6
 assign [class="^Emacs$"] 	$ws3
 
 # Opencv Fenster immer floating
-for_window [class="cv_*"] floating enable
-for_window [title="cv_*"] floating enable
-for_window [class="cv_*"] move position 0 0
-for_window [title="cv_*"] move position 0 0
-for_window [class="mid_*"] floating enable
-for_window [title="mid_*"] floating enable
-for_window [class="mid_*"] move position center
-for_window [title="mid_*"] move position center
+for_window [class="^cv_*"] floating enable
+for_window [title="^cv_*"] floating enable
+for_window [class="^cv_*"] move position 0 0
+for_window [title="^cv_*"] move position 0 0
+for_window [class="^mid_*"] floating enable
+for_window [title="^mid_*"] floating enable
+for_window [class="^mid_*"] move position center
+for_window [title="^mid_*"] move position center
 
 # Python Figures immer floating
 for_window [class="^Figure"] floating enable
 for_window [title="^Figure"] floating enable
 
 # Firefox immer tabbed:
-for_window [class="Firefox"] 	layout tabbed
-assign [class="Firefox"]	$ws1
-assign [class="Chromium"]	$ws6
+for_window [class="^Firefox"] 	layout tabbed
+assign [class="^Firefox"]	$ws1
+assign [class="^Chromium"]	$ws6
 
 # neomutt immer tabbed
-for_window [class="neomutt"] layout tabbed
-
-# Steam und Games:
-assign [class="^Steam$"]     	$ws3
-assign [class="^Lutris$"]    	$ws3
-assign [class="^Blizzard$"]  	$ws3
-assign [class="^TeamSpeak$"] 	$ws3
-assign [title="^TeamSpeak$"] 	$ws3
-for_window [class="Steam"]   	layout tabbed
-for_window [class="Lutris"]  	layout tabbed
+for_window [class="^neomutt"] layout tabbed
 
 # hide Davmail:
 for_window [title="^DavMail"] floating enable
@@ -200,13 +183,13 @@ for_window [title="^DavMail"] sticky enable
 #bindsym Mod1+d [title="^DavMail"] scratchpad show
 
 # #---Dropdown Windows---# #
-for_window [instance="dropdown_*"] floating enable
-for_window [instance="dropdown_*"] move scratchpad
-for_window [instance="dropdown_*"] sticky enable
-for_window [instance="dropdown_*"] scratchpad show
-for_window [instance="dropdown_terminal"] resize set 960 250
-for_window [instance="dropdown_terminal"] border pixel 2
-for_window [instance="dropdown_terminal"] move position center
+for_window [instance="^dropdown_*"] floating enable
+for_window [instance="^dropdown_*"] move scratchpad
+for_window [instance="^dropdown_*"] sticky enable
+for_window [instance="^dropdown_*"] scratchpad show
+for_window [instance="^dropdown_terminal"] resize set 960 250
+for_window [instance="^dropdown_terminal"] border pixel 2
+for_window [instance="^dropdown_terminal"] move position center
 
 #for_window [instance="conky"] floating enable
 #for_window [instance="conky"] move scratchpad
@@ -238,7 +221,7 @@ bindsym $mod+Shift+0x2b exec changeVolume u
 bindsym $mod+Shift+0x2d exec changeVolume m
 # Programme:
 bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Shift+Return exec i3-sensible-terminal -e ranger
+bindsym $mod+Shift+Return exec xterm
 bindsym $mod+BackSpace exec i3-sensible-terminal -e htop
 bindsym $mod+w exec --no-startup-id firefox
 bindsym $mod+Shift+w exec --no-startup-id firefox -private-window
@@ -255,7 +238,7 @@ bindsym $mod+g exec --no-startup-id gapswitch
 bindsym Mod1+m exec dmenumount
 bindsym Mod1+Shift+m exec dmenuunmount
 # Kill process with dmenu:
-bindsym Mod1+Shift+k exec dmenukill
+bindsym Mod1+Shift+k exec sudo dmenukill
 # Select network with dmenu:
 bindsym Mod1+n exec urxvt -name dropdown_wifi -e dmenuwifi
 # change to random bg:
@@ -313,18 +296,6 @@ bindsym $mod+s layout tabbed
 bindsym $mod+e layout toggle split
 # quiet mode <- TODO: integrate into emacs
 bindsym $mod+Shift+f bar mode toggle
-bindsym $mod+0x3c bar mode toggle; mode "zen"; exec i3zen 
-mode "zen" {
-	bindsym Control+j    workspace $zen1
-	bindsym Control+0xf6 workspace $zen2
-	bindsym Control+m workspace    $ws7
-	bindsym Control+Shift+j    move container to workspace $zen1
-	bindsym Control+Shift+0xf6 move container to workspace $zen2
- 	bindsym Control+Tab workspace back_and_forth
-
-	bindsym $mod+0x3c exec i3unzen; bar mode toggle; mode "default"
- 	bindsym Escape mode "default
-}
 #bindsym $mod+Shift+q mode "quiet"
 exec_always $HOME/.config/i3/quiet-toggle-bar.py --kill
 # Floating stuff
