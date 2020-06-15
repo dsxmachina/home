@@ -1,3 +1,5 @@
 #!/bin/bash
-pid="$(ps -Ao pid,user,fname,pcpu,stat,start_time,size,comm | dmenu -i -l 20 | grep -o -E '[0-9]+' | head -1)"
+header="$(ps -Ao pid,user,fname,pcpu,stat,start_time,comm | head -1)"
+proces="$(ps -Ao pid,user,fname,pcpu,stat,start_time,comm | tail -n +2 |sort -k 4 -h -r)"
+pid="$(echo -e "$header\n$proces" | dmenu -i -l 20 | grep -o -E '[0-9]+' | head -1)"
 [ ! -z "$pid" ] && kill $pid && notify-send "process with pid <$pid> killed"

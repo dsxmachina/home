@@ -20,10 +20,8 @@
 ## dmenuwifi
 
 I haven't found any program to connect to a wifi without using a mouse, so i wrote this little script.
-It needs a folder (mine is under ~/.config/wireless) where it stores all know wifis and their passworts (and proxy urls if used).
-"Oh no, it is super unsafe! It saves the passwords in plain text!!".. Yeah, kind of..
-But i really don't care if anyone who has acess to my laptop can steal my wifi password.
-If you want, you can modify it, so it can use gnupg or pass to store the password encrypted.
+It needs a folder (mine is under $HOME/.config/wireless) where it stores all know wifis and their passworts (and proxy urls if used).
+It stores the pw in plain text - if you want, you can modify it, so it can use gnupg or pass to store the password encrypted.
 
 Requires:
 - dmenu

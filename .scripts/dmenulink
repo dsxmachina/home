@@ -1,5 +1,4 @@
 #!/bin/bash
-
 urls=$(geturls.py <&0)
 if [[ $urls != "" ]]; then
 	url=$(echo -e "$urls" | dmenu -l 10)
