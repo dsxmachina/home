@@ -43,6 +43,27 @@ URxvt.scrollBar: 	false
 URxvt.iso14755: 	false
 URxvt.iso14755_52: 	false
 
+!! xterm
+xterm*font: xft:source code pro:size=13
+xterm*foreground: #FF8000
+xterm*background: #000000
+xterm*color0:                #000000
+xterm*color8:                #002B36
+xterm*color1:                #DC322F
+xterm*color9:                #CB4B16
+xterm*color2:                #859900
+xterm*color10:               #586E75
+xterm*color3:                #B58900
+xterm*color11:               #657B83
+xterm*color4:                #268BD2
+xterm*color12:               #839496
+xterm*color5:                #D33682
+xterm*color13:               #6C71C4
+xterm*color6:                #A07E5D
+xterm*color14:               #A19A93
+xterm*color7:                #FF8000
+xterm*color15: 		#FF8000
+
 !! Extensions:
 URxvt-perl-ext-common: 		default,matcher,resize-font,url-select,keyboard-select
 !! url-select:
