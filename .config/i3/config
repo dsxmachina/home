@@ -323,6 +323,7 @@ bindsym Control+0x23 workspace $ws5
 bindsym Control+n workspace    $ws6
 bindsym Control+m workspace    $ws7
 bindsym Control+0xfc workspace $ws8
+bindsym Control+i workspace    $ws9
 #
 #bindsym $mod+Left  workspace prev
 #bindsym $mod+Right workspace next
@@ -346,6 +347,7 @@ bindsym Control+Shift+0x23 move container to workspace $ws5
 bindsym Control+Shift+n    move container to workspace $ws6
 bindsym Control+Shift+m    move container to workspace $ws7
 bindsym Control+Shift+0xfc move container to workspace $ws8
+bindsym Control+Shift+i    move container to workspace $ws9
 # Move Workspace to next output
 bindsym $mod+Shift+s move workspace to output up
 # "Gaming switch" für das Tastaturlayout
