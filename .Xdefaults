@@ -71,7 +71,6 @@ URxvt.keysym.M-u: 		perl:url-select:select_next
 URxvt.url-select.launcher:	/usr/bin/xdg-open
 URxvt.url-select.underline:	true
 !! keyboard-select:
-URxvt.keysym.C-v:		perl:keyboard-select:activate !!!! resize-font:
 URxvt.keysym.C-plus: 		resize-font:bigger
 Urxvt.keysym.C-minus: 		resize-font:smaller
 Urxvt.keysym.C-0:		resize-font:reset
@@ -82,7 +81,6 @@ URxvt.matcher.button:		1
 
 !! Custom-Keybindings:
 URxvt.keysym.Shift-Control-V: 	eval:paste_clipboard
-URxvt.keysym.Control-V: 	eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: 	eval:selection_to_clipboard
 
 URxvt.keysym.Shift-Up: 		command:\033]720;1\007
