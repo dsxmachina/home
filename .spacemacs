@@ -43,28 +43,41 @@ This function should only modify configuration layer settings."
                       auto-completion-enable-help-tooltip nil)
      (lsp :variables
           lsp-navigation 'peek
-          lsp-print-performance t
-          lsp-enable-file-watchers t
+          ;; lsp-print-performance t
+          ;; lsp-enable-file-watchers t
           lsp-ui-doc-enable nil
           lsp-enable-indentation nil
-          lsp-enable-on-type-formatting nil)
+          lsp-enable-on-type-formatting nil
+          lsp-signature-auto-activate nil
+          )
      (cmake :variables
-            cmake-enable-cmake-ide-support t)
+            cmake-enable-cmake-ide-support t
+            )
      syntax-checking
      debug
      git
      ;; Languages
      (c-c++ :variables
             c-c++-adopt-subprojects t
-            c-c++-backend 'lsp-ccls)
+            c-c++-backend 'lsp-ccls
+            c-c++-lsp-semantic-highlight-method 'overlay
+            )
      (rust :variables
-           rust-backend 'racer)
+           rust-backend 'racer
+           )
      org
      emacs-lisp
      markdown
      (python :variables
-             python-backend 'lsp)
+             python-backend 'lsp
+             python-eldoc-get-doc nil
+             )
      nixos
+     (latex :variables
+            latex-build-command "xelatex"
+            latex-enable-auto-fill t
+            latex-enable-folding t
+            latex-enabe-magic t)
      ;; making emacs great again
      treemacs
      helm
@@ -73,7 +86,8 @@ This function should only modify configuration layer settings."
      (shell :variables
             shell-default-height 30
             shell-default-shell 'eshell
-            shell-default-position 'bottom)
+            shell-default-position 'bottom
+            )
      )
 
    ;; List of additional packages that will be installed without being
@@ -564,7 +578,7 @@ before packages are loaded."
   (setq ranger-max-preview-size 10)
   ;; Projectile
   (setq projectile-require-project-root t)
-  (setq projectile-indexing-method 'hybrid)
+  (setq projectile-indexing-method 'alien)
   (setq projectile-project-root-files '( ".dir-locals.el" "Makefile" "CMakeLists.txt"))
   (setq projectile-project-root-files-functions '(projectile-root-top-down
                                                   projectile-root-top-down-recurring
@@ -573,6 +587,19 @@ before packages are loaded."
   ;; Org-Stuff
   (setq org-todo-keywords '((sequence "TODO" "PROGRESS" "TERMIN:" "|" "DONE" "CANCELLED")))
   (setq powerline-default-separator 'arrow)
+  ;; Speed me up
+  ;; (setq company-candidates-cache 'auto)
+  ;; please use latest c++ standard
+  (add-hook 'c-mode-hook
+            (lambda ()
+              (setq flycheck-clang-language-standard "c17")))
+  (add-hook 'c++-mode-hook
+            (lambda ()
+              (setq flycheck-clang-language-standard "c++17")))
+  (dap-mode 1)
+  (dap-ui-mode 1)
+  (dap-tooltip-mode 1)
+  (lsp-treemacs-sync-mode 1)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -590,11 +617,14 @@ This function is called at the very end of Spacemacs initialization."
  '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
    (quote
-    (nix-mode helm-nixos-options company-nixos-options nixos-options company-racer ac-racer toml-mode racer flycheck-rust cargo rust-mode realgud test-simple loc-changes load-relative typit mmt sudoku pacmacs 2048-game yapfify xterm-color vterm treemacs-magit smeargle shell-pop pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain multi-term mmm-mode markdown-toc magit-svn magit-gitflow magit-popup lsp-python-ms live-py-mode importmagic epc ctable concurrent htmlize helm-pydoc helm-org-rifle helm-org helm-gitignore helm-git-grep gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-org evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help cython-mode company-anaconda blacken anaconda-mode pythonic ranger helm-ctest cmake-mode cmake-ide levenshtein dap-mode bui tree-mode yasnippet-snippets lsp-ui lsp-treemacs helm-rtags helm-lsp helm-company helm-c-yasnippet google-c-style fuzzy flycheck-ycmd flycheck-rtags flycheck-pos-tip pos-tip disaster cquery cpp-auto-include company-ycmd ycmd request-deferred deferred company-statistics company-rtags rtags company-lsp company-c-headers company clang-format ccls lsp-mode markdown-mode dash-functional auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl let-alist flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize f dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async)))
+    (company-reftex company-auctex auctex wgrep smex ivy-yasnippet ivy-xref ivy-rtags ivy-purpose ivy-hydra counsel swiper ivy nix-mode helm-nixos-options company-nixos-options nixos-options company-racer ac-racer toml-mode racer flycheck-rust cargo rust-mode realgud test-simple loc-changes load-relative typit mmt sudoku pacmacs 2048-game yapfify xterm-color vterm treemacs-magit smeargle shell-pop pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain multi-term mmm-mode markdown-toc magit-svn magit-gitflow magit-popup lsp-python-ms live-py-mode importmagic epc ctable concurrent htmlize helm-pydoc helm-org-rifle helm-org helm-gitignore helm-git-grep gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md evil-org evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help cython-mode company-anaconda blacken anaconda-mode pythonic ranger helm-ctest cmake-mode cmake-ide levenshtein dap-mode bui tree-mode yasnippet-snippets lsp-ui lsp-treemacs helm-rtags helm-lsp helm-company helm-c-yasnippet google-c-style fuzzy flycheck-ycmd flycheck-rtags flycheck-pos-tip pos-tip disaster cquery cpp-auto-include company-ycmd ycmd request-deferred deferred company-statistics company-rtags rtags company-lsp company-c-headers company clang-format ccls lsp-mode markdown-mode dash-functional auto-yasnippet yasnippet ac-ispell auto-complete ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen treemacs-projectile treemacs-evil treemacs ht pfuture toc-org symon symbol-overlay string-inflection spaceline-all-the-icons spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode password-generator paradox spinner overseer org-bullets open-junk-file nameless move-text macrostep lorem-ipsum link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile projectile helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl let-alist flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state iedit evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens paredit evil-args evil-anzu anzu eval-sexp-fu elisp-slime-nav editorconfig dumb-jump doom-modeline shrink-path all-the-icons memoize f dash s devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg undo-tree dotenv-mode diminish bind-map bind-key async)))
  '(pdf-view-midnight-colors (quote ("#655370" . "#fbf8ef")))
  '(safe-local-variable-values
    (quote
-    ((projectile-project-run-cmd . "./build/release/cvCuda_test")
+    ((cmake-ide-build-dir . "~/Projekte/loadrunner/bodensensor/build")
+     (projectile-project-run-cmd . "./build/mThread")
+     (projectile-project-name . "mThread")
+     (projectile-project-run-cmd . "./build/release/cvCuda_test")
      (projectile-project-name . "cvCuda_test")
      (projectile-project-run-cmd . "./build/release/nix_test")
      (projectile-project-name . "nix_test")
