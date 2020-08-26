@@ -26,6 +26,8 @@ exec --no-startup-id firefox
 #exec --no-startup-id "$HOME/.config/i3blocks/randomBackground"
 #exec --no-startup-id conky
 exec --no-startup-id urxvt -name dropdown_terminal
+exec --no-startup-id firefox
+exec --no-startup-id chromium_fs
 #-- 
 
 set_from_resource $fg i3wm.color7 #f0f0f0
@@ -34,7 +36,7 @@ set_from_resource $c3 i3wm.color3 #f0f0f0
 
 # class                 border  backgr. text indicator child_border
 client.focused          $bg     $bg     $fg  $c3       $bg
-client.focused_inactive $bg     $bg     $fg  $c3       $bg
+client.focused_inactive #f0f0f0     $bg     $fg  $c3       $bg
 client.unfocused        $bg     $bg     $fg  $c3       $bg
 client.urgent           $bg     $bg     $fg  $c3       $bg
 client.placeholder      $bg     $bg     $fg  $c3       $bg
@@ -74,6 +76,8 @@ workspace $ws1 gaps inner 0
 workspace $ws1 gaps outer 0
 workspace $ws3 gaps inner 0
 workspace $ws3 gaps outer 0
+workspace $ws7 gaps inner 0
+workspace $ws7 gaps outer 0
 
 workspace 1 output primary
 workspace 2 output primary
@@ -115,7 +119,8 @@ for_window [title="^Figure"] floating enable
 # Firefox immer tabbed:
 for_window [class="Firefox"] 	layout tabbed
 assign [class="Firefox"]	$ws1
-assign [class="Chromium"]	$ws6
+for_window [class="Chromium"] 	layout tabbed
+assign [class="Chromium"]	$ws3
 
 # neomutt immer tabbed
 for_window [class="neomutt"] layout tabbed
@@ -161,6 +166,7 @@ for_window [instance="conky"] scratchpad show
 
 # --- Keybindings:
 bindsym 0x1008ff26 exec showTime
+bindsym 0x1008ff18 exec coffeeReady
 # kill focused window
 bindsym $mod+q kill
 # start dmenu (a program launcher)
@@ -229,12 +235,6 @@ mode "resize" {
 	bindsym r mode "default"
 	bindsym $mod+r mode "default"
 }
-mode "zen" {
-	bindsym Control+m workspace $ws1
-	bindsym Control+n workspace $ws2
-	bindsym j mode "default"
-}
-bindsym $mod+z mode "zen"
 
 # move focused window
 bindsym $mod+Shift+h move left  30px

@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+notify-send "Starting Coffee Timer"
+termdown 210s
+notify-send "Coffee Ready!"
+mpv $HOME/.scripts/files/ping.wav

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+con=$(ping -c1 8.8.8.8 >& /dev/null; echo $?)
+[[ $con == "0" ]] && echo "Connected to the internet" || echo "No connection to the internet"
