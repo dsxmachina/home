@@ -24,6 +24,7 @@
 !.scripts
 .scripts/files
 .scripts/testbed.sh
+.scripts/gapval.dat
 
 # ... mail shit ...
 !.mutt/
