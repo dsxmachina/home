@@ -36,7 +36,7 @@ background:		#000000
 
 !! Appearance:
 URxvt.foreground: 	#FF2222
-URxvt.background: 	[80]#000000
+URxvt.background: 	[90]#000000
 URxvt.depth: 		32
 URxvt.font: 		xft:source code pro:size=20
 URxvt.scrollBar: 	false

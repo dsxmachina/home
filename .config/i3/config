@@ -19,10 +19,9 @@ smart_borders on
 
 # Startup:
 exec --no-startup-id unclutter
-exec --no-startup-id compton -b --config ~/.config/compton/compton.conf
+#exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 exec --no-startup-id dunst
 exec --no-startup-id wal -R 
-exec --no-startup-id firefox
 #exec --no-startup-id "$HOME/.config/i3blocks/randomBackground"
 #exec --no-startup-id conky
 exec --no-startup-id urxvt -name dropdown_terminal
