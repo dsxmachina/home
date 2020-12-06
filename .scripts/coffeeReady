@@ -1,6 +1,17 @@
 #!/usr/bin/bash
-
+file="$HOME/.scripts/files/coffeeTime.txt"
+if (( $(pgrep coffeeReady | wc -l) > 2 ));
+then
+	duration=$(cat $file)
+	notify-send "Remaining time: $duration s"
+	exit 0
+fi
 notify-send "Starting Coffee Timer"
-termdown 210s
+#termdown 210s
+for ((i=210; i>0; i--))
+do
+	echo $i > $file
+	sleep 1
+done
 notify-send "Coffee Ready!"
 mpv $HOME/.scripts/files/ping.wav

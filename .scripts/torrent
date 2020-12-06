@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+sudo systemctl start docker
+cd $HOME/Software/transmission-docker
+docker-compose up
+# cleanup afterwards
+sudo systemctl stop docker
